@@ -2,9 +2,9 @@
 
 namespace DI
 {
-    public class ProjectInstaller : MonoBehaviour
+    public abstract class Installer : MonoBehaviour
     {
-        private Container _container;
+        protected Container _container;
 
         public void Init()
         {
@@ -22,9 +22,6 @@ namespace DI
             }
         }
 
-        private void InstallBindings()
-        {
-           
-        }
+        protected abstract void InstallBindings();
     }
 }

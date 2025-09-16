@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace DI
 {
+    /// <summary>
+    /// метод должен быть public
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class InjectAttribute : Attribute { }
     public enum ResolveType

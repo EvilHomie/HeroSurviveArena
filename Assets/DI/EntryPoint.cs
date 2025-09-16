@@ -4,18 +4,20 @@ namespace DI
 {
     public class EntryPoint
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void InitGame()
-        {
-            InitDI();
-        }
+        //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        //static void InitGame()
+        //{
+        //    InitDI();
+        //}
 
-        private static void InitDI()
-        {
-            var projectInstallerPF = Resources.Load<ProjectInstaller>("ProjectInstaller");
-            var projectInstaller = Object.Instantiate(projectInstallerPF);
-            Object.DontDestroyOnLoad(projectInstaller.gameObject);
-            projectInstaller.Init();
-        }
+        //private static void InitDI()
+        //{
+        //    //var projectInstallerPF = Resources.Load<Installer>("ProjectInstaller");
+        //    //var projectInstaller = Object.Instantiate(projectInstallerPF);
+
+        //    var installer = Object.FindFirstObjectByType<Installer>(FindObjectsInactive.Include);
+        //    Object.DontDestroyOnLoad(installer.gameObject);
+        //    installer.Init();
+        //}
     }
 }
