@@ -1,48 +1,47 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class GameFlowSystem : MonoBehaviour
+namespace GameSystem
 {
-    public event Action CustomUpdate;
-    public event Action CustomLateUpdate;
-    public event Action<GameFlowState> ChangeGameState;
-    public event Action CustomStart;
-    public event Action OnAppQuit;
-
-    public void StartGame()
+    public class GameFlowSystem : MonoBehaviour
     {
-        CustomStart?.Invoke();
-    }
+        [SerializeField] GameFlowState test;
+        public event Action UpdateTick;
+        public event Action LateUpdateTick;
+        public event Action<GameFlowState> ChangeGameState;
 
-    public void ChangeFlowState(GameFlowState flow)
-    {
-        ChangeGameState?.Invoke(flow);
-    }
+        private GameFlowState _state;
 
-    private void Update()
-    {
-        CustomUpdate?.Invoke();
-    }
+        public void ChangeState(GameFlowState state)
+        {
+            _state = state;
+            ChangeGameState?.Invoke(state);
+        }
 
-    private void LateUpdate()
-    {
-        CustomLateUpdate?.Invoke();
-    }
+        private void Update()
+        {
+            if (_state != test)
+            {
+                _state = test;
+                ChangeState(_state);
+            }
 
-    private void OnApplicationQuit()
-    {
-        OnAppQuit?.Invoke();
-    }
-}
 
-public enum GameFlowState
-{
-    MainMenu,       // Главное меню
-    GameMenu,       // Меню в игре
-    Loading,        // Загрузка сцены или ресурсов
-    Playing,        // Игровой процесс
-    Paused,         // Пауза
-    GameOver,       // Конец игры
-    Victory,        // Победа
-    Cutscene,       // Видеоролик или сюжетное событие (анимация)
+
+            if (_state == GameFlowState.Playing)
+            {
+                UpdateTick?.Invoke();
+            }
+
+
+
+            
+        }
+
+        private void LateUpdate()
+        {
+            LateUpdateTick?.Invoke();
+        }
+    }
 }

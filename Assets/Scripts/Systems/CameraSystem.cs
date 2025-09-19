@@ -1,28 +1,31 @@
 using DI;
 using UnityEngine;
 
-public class CameraSystem : MonoBehaviour
+namespace GameSystem
 {
-    private Vector3 _deffOffset;
-    private Camera _camera;
-    private PlayerContainer _playerContainer;
-
-    [Inject]
-    public void Constructor(PlayerContainer playerContainer, GameFlowSystem gameFlow, Camera camera)
+    public class CameraSystem : MonoBehaviour
     {
-        _playerContainer = playerContainer;
-        _camera = camera;
-        gameFlow.CustomStart += OnStart;
-        gameFlow.CustomLateUpdate += OnLateUpdate;
-    }
+        private Vector3 _deffOffset;
+        private Camera _camera;
+        private PlayerContainer _playerContainer;
 
-    private void OnStart()
-    {
-        _deffOffset = _camera.transform.position;
-    }
+        [Inject]
+        public void Constructor(PlayerContainer playerContainer, GameFlowSystem gameFlow, Camera camera)
+        {
+            _playerContainer = playerContainer;
+            _camera = camera;
+            gameFlow.LateUpdateTick += OnLateUpdateTick;
+        }
 
-    private void OnLateUpdate()
-    {
-        _camera.transform.position = _playerContainer.transform.position + _deffOffset;
+        private void Awake()
+        {
+            _deffOffset = _camera.transform.position;
+        }
+
+        private void OnLateUpdateTick()
+        {
+            _camera.transform.position = _playerContainer.transform.position + _deffOffset;
+        }
     }
 }
+
