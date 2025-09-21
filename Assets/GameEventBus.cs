@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameSystem
 {
-    public class EventSystem : MonoBehaviour
+    public class GameEventBus : MonoBehaviour
     {
         public Action InitGame;
         public Action StartGame;

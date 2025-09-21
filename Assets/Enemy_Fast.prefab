@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7646986861284244887}
-  - component: {fileID: 2205578786510736060}
   - component: {fileID: 3439119529656580804}
+  - component: {fileID: 2205578786510736060}
   m_Layer: 0
   m_Name: Enemy_Fast
   m_TagString: Untagged
@@ -34,19 +34,6 @@ Transform:
   - {fileID: 1968627897455547731}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2205578786510736060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084025377646449882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad2b24051e62b14099467521359f164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
-  _enemyType: 1
 --- !u!54 &3439119529656580804
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -74,6 +61,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2205578786510736060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084025377646449882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad2b24051e62b14099467521359f164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
+  <EnemyType>k__BackingField: 1
+  <DesiredDistance>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 2
+  <ContactDamage>k__BackingField: 0
+  _defaultHealthPoint: 0
 --- !u!1 &5581591769207881982
 GameObject:
   m_ObjectHideFlags: 0

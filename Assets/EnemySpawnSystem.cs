@@ -1,10 +1,9 @@
 using DI;
-using GameSystem;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace CoreGamePlay
+namespace GameSystem
 {
     public class EnemySpawnSystem : MonoBehaviour
     {
@@ -13,13 +12,14 @@ namespace CoreGamePlay
         private Config _config;
         private EnemiesPool _enemyPool;
         private PlayerContainer _playerContainer;
+        private GameEventBus _gameEventBus;
         private float _enemySpawnRepeatRate;
         private float _enemySpawnTimer;
         private float _spawnRadius;
         private List<EnemyType> _enemyTypes;
 
         [Inject]
-        public void Constructor(GameFlowSystem gameFlowSystem, Config config, EnemiesPool enemiesPool, PlayerContainer playerContainer)
+        public void Constructor(GameFlowSystem gameFlowSystem, Config config, EnemiesPool enemiesPool, PlayerContainer playerContainer, GameEventBus eventBus)
         {
             _gameFlowSystem = gameFlowSystem;
             _config = config;
@@ -27,6 +27,7 @@ namespace CoreGamePlay
             _enemyPool = enemiesPool;
             _playerContainer = playerContainer;
             _spawnRadius = config.EnemySpawnRadius;
+            _gameEventBus = eventBus;
             _gameFlowSystem.ChangeGameState += OnChangeGameState;
             _gameFlowSystem.UpdateTick += OnUpdateTick;
         }
@@ -86,6 +87,7 @@ namespace CoreGamePlay
             enemy.transform.position = spawnPos;
             enemy.transform.forward = dirToPlayer;
             enemy.gameObject.SetActive(true);
+            _gameEventBus.EnemySpawn(enemy);
         }
 
         private Enemy GetRandomEnemy()

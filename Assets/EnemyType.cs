@@ -1,6 +1,6 @@
 public enum EnemyType
 {
-    Slow,
-    Fast,
+    KamikadzeSlow,
+    KamikadzeFast,
     Ranged
 }

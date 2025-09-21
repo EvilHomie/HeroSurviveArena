@@ -1,11 +1,10 @@
 using DI;
-using GameSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace CoreGamePlay
+namespace GameSystem
 {
     public class EnemiesPool : MonoBehaviour
     {
@@ -15,7 +14,7 @@ namespace CoreGamePlay
         private HashSet<Enemy> _activeEnemies;
 
         [Inject]
-        public void Constructor(EventSystem eventBus, Container container)
+        public void Constructor(GameEventBus eventBus, Container container)
         {
             _poolByType = new();
             _prefabByType = new();

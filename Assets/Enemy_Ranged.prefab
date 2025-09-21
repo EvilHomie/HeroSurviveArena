@@ -123,8 +123,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4260948807447853725}
-  - component: {fileID: 1657846322282678106}
   - component: {fileID: 7000425652355987251}
+  - component: {fileID: 1657846322282678106}
   m_Layer: 0
   m_Name: Enemy_Ranged
   m_TagString: Untagged
@@ -148,19 +148,6 @@ Transform:
   - {fileID: 2804008071133791433}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1657846322282678106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8741808495252824265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 066b0dc32b178eb4d80a6a96facd5dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
-  _enemyType: 2
 --- !u!54 &7000425652355987251
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,6 +175,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1657846322282678106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741808495252824265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066b0dc32b178eb4d80a6a96facd5dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
+  <EnemyType>k__BackingField: 2
+  <DesiredDistance>k__BackingField: 3
+  <MoveSpeed>k__BackingField: 2
+  <ContactDamage>k__BackingField: 0
+  _defaultHealthPoint: 0
 --- !u!1 &8774174814326859513
 GameObject:
   m_ObjectHideFlags: 0

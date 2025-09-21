@@ -1,23 +1,43 @@
 using DI;
+using GameSystem;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
-{
-    //[SerializeField] float _defaultHealthPoint;
-    //[SerializeField] float _defaultMoveSpeed;
-    //[SerializeField] float _defaultDamage;
+public abstract class Enemy : MonoBehaviour, IDamageable
+{    
+    [field: SerializeField] public EnemyType EnemyType { get; private set; }
+    [field: SerializeField] public float DesiredDistance { get; private set; }
+    [field: SerializeField] public float MoveSpeed { get; private set; }
+    [field: SerializeField] public float ContactDamage { get; private set; }
 
-    [SerializeField] EnemyType _enemyType;
+    [SerializeField] float _defaultHealthPoint;
+    private GameEventBus _eventBus;
 
-    public EnemyType EnemyType => _enemyType;
+
+    public float CurentHealthPoint { get; private set; }
+
+
+    [Inject]
+    public void Constructor(GameEventBus eventBus)
+    {
+        _eventBus = eventBus;
+    }
 
     public void ResetData()
     {
-
+        CurentHealthPoint = _defaultHealthPoint;
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
+    public void Damage(float value)
+    {
+        CurentHealthPoint -= value;
+        if (CurentHealthPoint <= 0)
+        {
+            _eventBus.EnemyDie(this);
+        }
+    }
 
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }

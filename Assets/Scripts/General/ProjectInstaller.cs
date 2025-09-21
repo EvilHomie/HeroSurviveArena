@@ -1,4 +1,3 @@
-using CoreGamePlay;
 using GameInput;
 using GameSystem;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace DI
         [SerializeField] PlayerContainer _playerContainer;
         [SerializeField] Config _config;
         [SerializeField] Camera _camera;
-        [SerializeField] EventSystem _eventBus;
+        [SerializeField] GameEventBus _eventBus;
         [SerializeField] EnemiesPool _enemiesPool;
         protected override void InstallBindings()
         {
@@ -19,7 +18,7 @@ namespace DI
             _container.Bind<PlayerContainer>().FromInstance(_playerContainer);
             _container.Bind<Config>().FromInstance(_config);
             _container.Bind<Camera>().FromInstance(_camera);
-            _container.Bind<EventSystem>().FromInstance(_eventBus);
+            _container.Bind<GameEventBus>().FromInstance(_eventBus);
             _container.Bind<EnemiesPool>().FromInstance(_enemiesPool);
 
             if (Application.platform == RuntimePlatform.WindowsPlayer || Application.isEditor)

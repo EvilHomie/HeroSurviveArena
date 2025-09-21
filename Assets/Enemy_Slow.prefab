@@ -185,7 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9711587e537a4704784ec6c1342dfc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCube
-  _enemyType: 0
+  <EnemyType>k__BackingField: 0
+  <DesiredDistance>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 1
+  <ContactDamage>k__BackingField: 0
+  _defaultHealthPoint: 0
 --- !u!1 &3607933808188110834
 GameObject:
   m_ObjectHideFlags: 0
