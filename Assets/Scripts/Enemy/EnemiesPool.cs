@@ -1,4 +1,5 @@
 using DI;
+using Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,30 +9,27 @@ namespace GameSystem
 {
     public class EnemiesPool : MonoBehaviour
     {
-        private Dictionary<EnemyType, ObjectPool<Enemy>> _poolByType;
-        private Dictionary<EnemyType, Enemy> _prefabByType;
+        private readonly Dictionary<string, ObjectPool<AbstractEnemy>> _poolByName = new();
+        private readonly Dictionary<string, AbstractEnemy> _prefabByName = new();
         private Container _container;
-        private HashSet<Enemy> _activeEnemies;
+
+        public readonly HashSet<AbstractEnemy> ActiveEnemies = new();
 
         [Inject]
         public void Constructor(GameEventBus eventBus, Container container)
         {
-            _poolByType = new();
-            _prefabByType = new();
-            _activeEnemies = new();
             _container = container;
             eventBus.EnemyDie += ReturnEnemy;
         }
 
-        public void AddEnemy(Enemy enemyPF, int startCapacity, int maxCapacity, Transform parent = null, int prewarmCount = 1)
+        public void AddEnemy(AbstractEnemy enemyPF, int startCapacity, int maxCapacity, Transform parent = null, int prewarmCount = 1)
         {
             enemyPF.gameObject.SetActive(false);
-            _container.InjectMonoBehaviour(enemyPF);
-            _prefabByType.Add(enemyPF.EnemyType, enemyPF);
+            _prefabByName.Add(enemyPF.EnemyName, enemyPF);
 
-            var newPool = new ObjectPool<Enemy>(
+            var newPool = new ObjectPool<AbstractEnemy>(
 
-                   createFunc: () => OnCreateEnemy(enemyPF.EnemyType, parent),
+                   createFunc: () => OnCreateEnemy(enemyPF.EnemyName, parent),
                    actionOnGet: OnGetEnemy,
                    actionOnRelease: OnReturnEnemy,
                    actionOnDestroy: OnDestroyEnemy,
@@ -39,70 +37,71 @@ namespace GameSystem
                    maxSize: maxCapacity
                );
 
-            _poolByType.Add(enemyPF.EnemyType, newPool);
+            _poolByName.Add(enemyPF.EnemyName, newPool);
             PrewarmPool(newPool, prewarmCount);
         }
 
-        public Enemy GetEnemy(EnemyType enemyType)
+        public AbstractEnemy GetEnemy(string EnemyName)
         {
-            return FindPool(enemyType).Get();
+            return FindPool(EnemyName).Get();
         }
 
-        public void ReturnEnemy(Enemy enemy)
+        public void ReturnEnemy(AbstractEnemy enemy)
         {
-            FindPool(enemy.EnemyType).Release(enemy);
+            FindPool(enemy.EnemyName).Release(enemy);
             enemy.gameObject.SetActive(false);
         }
 
         public void ReturnAllActiveEnemies()
         {
-            _activeEnemies.RemoveWhere(enemy =>
+            ActiveEnemies.RemoveWhere(enemy =>
             {
                 ReturnEnemy(enemy);
                 return true;
             });
         }
 
-        private Enemy OnCreateEnemy(EnemyType enemyType, Transform parent)
+        private AbstractEnemy OnCreateEnemy(string enemyName, Transform parent)
         {
-            var prefab = _prefabByType[enemyType];
+            var prefab = _prefabByName[enemyName];
             var instance = Instantiate(prefab, parent);
+            _container.InjectMonoBehaviour(instance);
             return instance;
         }
 
-        private void OnGetEnemy(Enemy enemy)
+        private void OnGetEnemy(AbstractEnemy enemy)
         {
-            _activeEnemies.Add(enemy);
+            ActiveEnemies.Add(enemy);
         }
-        private void OnReturnEnemy(Enemy enemy)
+        private void OnReturnEnemy(AbstractEnemy enemy)
         {
-            _activeEnemies.Remove(enemy);          
+            ActiveEnemies.Remove(enemy);
         }
 
-        private void OnDestroyEnemy(Enemy enemy)
+        private void OnDestroyEnemy(AbstractEnemy enemy)
         {
             Destroy(enemy.gameObject);
         }
 
-        private void PrewarmPool(ObjectPool<Enemy> pool, int count)
+        private void PrewarmPool(ObjectPool<AbstractEnemy> pool, int count)
         {
-            List<Enemy> enemies = new();
+            List<AbstractEnemy> enemies = new();
             for (int i = 0; i < count; i++)
             {
                 var instance = pool.Get();
                 enemies.Add(instance);
             }
-            foreach (Enemy enemy in enemies)
+            foreach (AbstractEnemy enemy in enemies)
             {
                 pool.Release(enemy);
             }
         }
 
-        private ObjectPool<Enemy> FindPool(EnemyType enemyType)
+        private ObjectPool<AbstractEnemy> FindPool(string enemyName)
         {
-            if (!_poolByType.TryGetValue(enemyType, out var pool))
+            if (!_poolByName.TryGetValue(enemyName, out var pool))
             {
-                throw new Exception($"Не найден пул с {enemyType}");
+                throw new Exception($"Не найден пул с {enemyName}");
             }
             return pool;
         }

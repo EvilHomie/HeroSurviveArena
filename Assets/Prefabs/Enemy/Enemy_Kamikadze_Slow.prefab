@@ -122,9 +122,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9161816595040362206}
   - component: {fileID: 8174864072489353310}
-  - component: {fileID: 4885348199768796250}
+  - component: {fileID: 7370332899399526966}
   m_Layer: 0
-  m_Name: Enemy_Slow
+  m_Name: Enemy_Kamikadze_Slow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4885348199768796250
+--- !u!114 &7370332899399526966
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,11 +182,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2665832462015592066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9711587e537a4704784ec6c1342dfc5d, type: 3}
+  m_Script: {fileID: 11500000, guid: cad2b24051e62b14099467521359f164, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCube
-  <EnemyType>k__BackingField: 0
-  <DesiredDistance>k__BackingField: 0
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
+  <EnemyName>k__BackingField: Enemy_Kamikadze_Slow
+  <AtackDistance>k__BackingField: 0
   <MoveSpeed>k__BackingField: 1
   <ContactDamage>k__BackingField: 0
   _defaultHealthPoint: 0

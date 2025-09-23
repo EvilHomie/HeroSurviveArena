@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 7000425652355987251}
   - component: {fileID: 1657846322282678106}
   m_Layer: 0
-  m_Name: Enemy_Ranged
+  m_Name: Enemy_Ranged_NotMaintainingDistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,11 +187,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066b0dc32b178eb4d80a6a96facd5dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
-  <EnemyType>k__BackingField: 2
-  <DesiredDistance>k__BackingField: 3
+  <EnemyName>k__BackingField: Enemy_Ranged_NotMaintainingDistance
+  <AtackDistance>k__BackingField: 4
   <MoveSpeed>k__BackingField: 2
   <ContactDamage>k__BackingField: 0
   _defaultHealthPoint: 0
+  <IsMaintainingDistance>k__BackingField: 1
+  <CanAttackWhileMoving>k__BackingField: 0
+  _atackRate: 0
 --- !u!1 &8774174814326859513
 GameObject:
   m_ObjectHideFlags: 0

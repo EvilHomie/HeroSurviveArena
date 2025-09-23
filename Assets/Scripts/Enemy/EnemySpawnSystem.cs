@@ -1,4 +1,5 @@
 using DI;
+using Enemy;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,7 +17,7 @@ namespace GameSystem
         private float _enemySpawnRepeatRate;
         private float _enemySpawnTimer;
         private float _spawnRadius;
-        private List<EnemyType> _enemyTypes;
+        private List<string> _enemyNames;
 
         [Inject]
         public void Constructor(GameFlowSystem gameFlowSystem, Config config, EnemiesPool enemiesPool, PlayerContainer playerContainer, GameEventBus eventBus)
@@ -35,13 +36,13 @@ namespace GameSystem
         private void Awake()
         {
             _enemiesContainer = new GameObject("Enemies_Container");
-            _enemyTypes = new();
+            _enemyNames = new();
 
-            foreach (Enemy enemy in _config.Enemies)
+            foreach (AbstractEnemy enemy in _config.Enemies)
             {
                 if (enemy == null) continue;
 
-                _enemyTypes.Add(enemy.EnemyType);
+                _enemyNames.Add(enemy.EnemyName);
                 _enemyPool.AddEnemy(enemy, _config.EnemyPoolStartCapacity, _config.EnemyPoolMaxCapacity, _enemiesContainer.transform, _config.EnemyPoolPrewarmCount);
             }
         }
@@ -86,15 +87,16 @@ namespace GameSystem
             var dirToPlayer = _playerContainer.transform.position - spawnPos;
             enemy.transform.position = spawnPos;
             enemy.transform.forward = dirToPlayer;
+            enemy.ResetData();
             enemy.gameObject.SetActive(true);
-            _gameEventBus.EnemySpawn(enemy);
+            _gameEventBus.EnemySpawn?.Invoke(enemy);
         }
 
-        private Enemy GetRandomEnemy()
+        private AbstractEnemy GetRandomEnemy()
         {
-            var randomIndex = Random.Range(0, _enemyTypes.Count);
-            var randomType = _enemyTypes[randomIndex];
-            return _enemyPool.GetEnemy(randomType);
+            var randomIndex = Random.Range(0, _enemyNames.Count);
+            var randomName = _enemyNames[randomIndex];
+            return _enemyPool.GetEnemy(randomName);
         }
 
         private Vector3 GetSpawnPos()

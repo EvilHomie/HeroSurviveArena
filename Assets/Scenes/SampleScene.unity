@@ -154,6 +154,7 @@ Transform:
   - {fileID: 362732015}
   - {fileID: 1249935343}
   - {fileID: 771623634}
+  - {fileID: 1893804136}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &167141479
@@ -165,7 +166,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 167141480}
-  - component: {fileID: 167141481}
   - component: {fileID: 167141482}
   m_Layer: 0
   m_Name: PlayerContainer
@@ -190,18 +190,6 @@ Transform:
   - {fileID: 201313874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &167141481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167141479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eadba1dda99c8fa4c896d7d10fb4f67c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!114 &167141482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,6 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aac3b5aac99bd94b8ca5f42049a787f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSystem.EnemyMoveSystem
+  _moveTrashHold: 0.1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf7914a88ed8ff42bf9aaa9bfdccad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEntryPoint
-  _enableCustomLog: 0
 --- !u!4 &1193149684
 Transform:
   m_ObjectHideFlags: 0
@@ -887,6 +875,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 46759092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1893804135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1893804136}
+  - component: {fileID: 1893804137}
+  m_Layer: 0
+  m_Name: PlayerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1893804136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893804135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 46759092}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1893804137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893804135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eadba1dda99c8fa4c896d7d10fb4f67c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &2066283469
 GameObject:
   m_ObjectHideFlags: 0

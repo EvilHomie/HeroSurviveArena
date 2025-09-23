@@ -1,3 +1,4 @@
+using Enemy;
 using System;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ namespace GameSystem
         public Action GameOver;
         public Action Victory;
 
-        public Action<Enemy> EnemySpawn;
-        public Action<Enemy> EnemyDie;
+        public Action<AbstractEnemy> EnemySpawn;
+        public Action<AbstractEnemy> EnemyDie;
     }
 }
 
