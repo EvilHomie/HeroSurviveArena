@@ -1,4 +1,4 @@
-public enum GameFlowState
+public enum GameState
 {
     Init,
     StartGame,

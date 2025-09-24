@@ -73,11 +73,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad2b24051e62b14099467521359f164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
+  _defaultHealthPoint: 0
   <EnemyName>k__BackingField: Enemy_Kamikadze_Fast
   <AtackDistance>k__BackingField: 1
-  <MoveSpeed>k__BackingField: 3
+  <AttackDamage>k__BackingField: 3
   <ContactDamage>k__BackingField: 0
-  _defaultHealthPoint: 0
+  <MoveSpeed>k__BackingField: 3
 --- !u!1 &5581591769207881982
 GameObject:
   m_ObjectHideFlags: 0

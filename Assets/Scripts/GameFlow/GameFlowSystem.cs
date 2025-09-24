@@ -6,14 +6,12 @@ namespace GameSystem
 {
     public class GameFlowSystem : MonoBehaviour
     {
-        [SerializeField] GameFlowState test;
-        public Action PreUpdateTick { get; set; }
+        [SerializeField] GameState test;
         public Action UpdateTick { get; set; }
         public Action LateUpdateTick { get; set; }
-        public Action<GameFlowState> ChangeGameState { get; set; }
 
         private GameEventBus _eventBus;
-        private GameFlowState _state;
+        private GameState _currentState;
 
         [Inject]
         public void Construct(GameEventBus eventBus)
@@ -31,56 +29,43 @@ namespace GameSystem
             Unsubscribe();
         }
 
-        public void ChangeState(GameFlowState state)
+        private void Subscribe()
         {
-            _state = state;
-            ChangeGameState?.Invoke(state);
+            _eventBus.ChangeGameState += ChangeState;
+        }
+        private void Unsubscribe()
+        {
+            _eventBus.ChangeGameState -= ChangeState;
+        }
+
+        public void ChangeState(GameState state)
+        {
+            _currentState = state;
+            test = state;
         }
 
         private void Update()
         {
-            if (_state != test)
+            if (_currentState != test) // кусок для тестирования через редактор
             {
-                _state = test;
-                ChangeState(_state);
+                _currentState = test;
+                _eventBus.ChangeGameState?.Invoke(test);
             }
 
 
 
-            if (_state == GameFlowState.Playing)
+            if (_currentState == GameState.Playing)
             {
-                PreUpdateTick?.Invoke();
                 UpdateTick?.Invoke();
             }
-
-
-
-
         }
 
         private void LateUpdate()
         {
-            LateUpdateTick?.Invoke();
-        }
-
-        private void OnGameOver()
-        {
-            ChangeState(GameFlowState.GameOver);
-        }
-        private void OnVictory()
-        {
-            ChangeState(GameFlowState.Victory);
-        }
-
-        private void Subscribe()
-        {
-            _eventBus.GameOver += OnGameOver;
-            _eventBus.Victory += OnVictory;
-        }
-        private void Unsubscribe()
-        {
-            _eventBus.GameOver -= OnGameOver;
-            _eventBus.Victory -= OnVictory;
+            if (_currentState == GameState.Playing)
+            {
+                LateUpdateTick?.Invoke();
+            }
         }
     }
 }

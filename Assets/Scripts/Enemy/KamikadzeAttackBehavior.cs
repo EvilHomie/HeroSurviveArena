@@ -1,5 +1,4 @@
 using GameSystem;
-using UnityEngine;
 
 namespace Enemy
 {
@@ -14,12 +13,6 @@ namespace Enemy
             if (enemy.InAttackRange)
             {
                 target.CurrentHealthPoint -= enemy.AttackDamage;
-
-                if (target.CurrentHealthPoint <= 0)
-                {
-                    _eventBus.GameOver?.Invoke();
-                }
-
                 enemy.IsDead = true;
                 _eventBus.EnemyDie?.Invoke(enemy);
             }

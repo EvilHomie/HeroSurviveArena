@@ -7,10 +7,10 @@ namespace DI
     public class ProjectInstaller : Installer
     {
         [SerializeField] GameFlowSystem _gameFlowSystem;
+        [SerializeField] GameEventBus _eventBus;
         [SerializeField] Player _player;
         [SerializeField] Config _config;
         [SerializeField] Camera _camera;
-        [SerializeField] GameEventBus _eventBus;
         [SerializeField] EnemiesPool _enemiesPool;
         protected override void InstallBindings()
         {

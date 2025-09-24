@@ -2,7 +2,7 @@ using DI;
 using Enemy;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,17 +14,16 @@ namespace GameSystem
 
         private readonly Dictionary<string, ObjectPool<AbstractEnemy>> _poolByName = new();
         private readonly Dictionary<string, AbstractEnemy> _prefabByName = new();
-        private Container _container;
-        private List<AbstractEnemy> _deadEnemies = new();
+        private readonly List<AbstractEnemy> _deadEnemies = new();
 
         GameEventBus _gameEventBus;
         GameFlowSystem _gameFlowSystem;
 
         [Inject]
-        public void Construct(GameEventBus eventBus, Container container, GameFlowSystem gameFlowSystem)
+        public void Construct(GameEventBus eventBus, GameFlowSystem gameFlowSystem)
         {
-            _container = container;
-            
+            _gameEventBus = eventBus;
+            _gameFlowSystem = gameFlowSystem;
         }
 
         private void OnEnable()
@@ -34,6 +33,19 @@ namespace GameSystem
         private void OnDisable()
         {
             Unsubscribe();
+        }
+        private void Subscribe()
+        {
+            _gameEventBus.EnemyDie += OnEnemyDie;
+            _gameEventBus.ChangeGameState += OnChangeGameState;
+            _gameFlowSystem.UpdateTick += ReturnDeadToPool;
+        }
+
+        private void Unsubscribe()
+        {
+            _gameEventBus.EnemyDie -= OnEnemyDie;
+            _gameEventBus.ChangeGameState -= OnChangeGameState;
+            _gameFlowSystem.UpdateTick -= ReturnDeadToPool;
         }
 
         public void AddEnemy(AbstractEnemy enemyPF, int startCapacity, int maxCapacity, Transform parent = null, int prewarmCount = 1)
@@ -58,34 +70,19 @@ namespace GameSystem
         public AbstractEnemy GetEnemy(string EnemyName)
         {
             return FindPool(EnemyName).Get();
-        }
-
-        public void ReturnEnemy(AbstractEnemy enemy)
-        {
-            _deadEnemies.Add(enemy);
-            enemy.gameObject.SetActive(false);
-        }
-
-        public void ReturnAllActiveEnemies()
-        {
-            foreach (var enemy in ActiveEnemies)
-            {
-                ReturnEnemy(enemy);
-            }
-
-            ActiveEnemies.Clear();
-        }
+        }       
 
         private AbstractEnemy OnCreateEnemy(string enemyName, Transform parent)
         {
             var prefab = _prefabByName[enemyName];
             var instance = Instantiate(prefab, parent);
-            _container.InjectMonoBehaviour(instance);
+            instance.Init();
             return instance;
         }
 
         private void OnGetEnemy(AbstractEnemy enemy)
         {
+            enemy.ResetData();
             ActiveEnemies.Add(enemy);
         }
         private void OnReturnEnemy(AbstractEnemy enemy)
@@ -101,11 +98,13 @@ namespace GameSystem
         private void PrewarmPool(ObjectPool<AbstractEnemy> pool, int count)
         {
             List<AbstractEnemy> enemies = new();
+
             for (int i = 0; i < count; i++)
             {
                 var instance = pool.Get();
                 enemies.Add(instance);
             }
+
             foreach (AbstractEnemy enemy in enemies)
             {
                 pool.Release(enemy);
@@ -118,28 +117,43 @@ namespace GameSystem
             {
                 throw new Exception($"Не найден пул с {enemyName}");
             }
+
             return pool;
         }
 
-        private void ClearCollection()
+        private void ReturnAllActiveEnemies()
+        {
+            foreach (var enemy in ActiveEnemies)
+            {
+                OnEnemyDie(enemy);
+            }
+
+            ReturnDeadToPool();
+        }
+
+        private void OnEnemyDie(AbstractEnemy enemy)
+        {
+            _deadEnemies.Add(enemy);
+            enemy.gameObject.SetActive(false);
+        }
+
+        private void ReturnDeadToPool()
         {
             foreach (var enemy in _deadEnemies)
             {
                 FindPool(enemy.EnemyName).Release(enemy);
+                ActiveEnemies.Remove(enemy);
             }
+
             _deadEnemies.Clear();
         }
 
-        private void Subscribe()
+        private void OnChangeGameState(GameState   gameState )
         {
-            _gameEventBus.EnemyDie += ReturnEnemy;
-            _gameFlowSystem.PreUpdateTick += ClearCollection;
-        }
-
-        private void Unsubscribe()
-        {
-            _gameEventBus.EnemyDie -= ReturnEnemy;
-            _gameFlowSystem.PreUpdateTick -= ClearCollection;
+            if (gameState == GameState.GameOver || gameState == GameState.Victory)
+            {
+                ReturnAllActiveEnemies();
+            }
         }
     }
 }

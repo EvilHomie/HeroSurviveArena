@@ -1,6 +1,7 @@
 using DI;
 using GameSystem;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,16 +16,18 @@ namespace GameInput
 
         private InputSystem_Actions _inputActions;
         private GameFlowSystem _gameFlowSystem;
+        private GameEventBus _eventBus;
         private Player _player;
         private Camera _camera;
         private Plane _raycastPlane;
         private bool _isActive;
 
         [Inject]
-        public void Constructor(GameFlowSystem gameFlowSystem, Player playerContainer, Camera camera)
+        public void Constructor(GameFlowSystem gameFlowSystem, Player playerContainer, Camera camera, GameEventBus eventBus)
         {
             _inputActions = new InputSystem_Actions();
             _gameFlowSystem = gameFlowSystem;
+            _eventBus = eventBus;
             _player = playerContainer;
             _camera = camera;
             _raycastPlane = new(Vector3.up, Vector3.zero);
@@ -33,7 +36,7 @@ namespace GameInput
         public void Subscrube()
         {
             _gameFlowSystem.UpdateTick += OnUpdateTick;
-            _gameFlowSystem.ChangeGameState += OnGameChangeState;
+            _eventBus.ChangeGameState += OnGameChangeState;
             _inputActions.Player.Attack.performed += OnAttack;
             _inputActions.Player.Attack.canceled += OnEndAttack;
         }
@@ -41,7 +44,7 @@ namespace GameInput
         public void Unsubscribe()
         {
             _gameFlowSystem.UpdateTick -= OnUpdateTick;
-            _gameFlowSystem.ChangeGameState -= OnGameChangeState;
+            _eventBus.ChangeGameState -= OnGameChangeState;
             _inputActions.Player.Attack.performed -= OnAttack;
             _inputActions.Player.Attack.canceled -= OnEndAttack;
         }
@@ -63,9 +66,9 @@ namespace GameInput
             }
         }
 
-        private void OnGameChangeState(GameFlowState gameFlow)
+        private void OnGameChangeState(GameState gameFlow)
         {
-            _isActive = gameFlow == GameFlowState.Playing;
+            _isActive = gameFlow == GameState.Playing;
 
             if (_isActive) _inputActions.Player.Enable();
             else _inputActions.Player.Disable();

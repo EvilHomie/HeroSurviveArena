@@ -15,6 +15,7 @@ namespace GameSystem
         {
             _player = player;
             _camera = camera;
+            _gameFlowSystem = gameFlow;
         }
 
         private void Awake()

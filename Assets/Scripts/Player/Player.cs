@@ -1,5 +1,4 @@
 using DI;
-using GameSystem;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -18,6 +17,7 @@ public class Player : MonoBehaviour
     {
         CachedTransform = transform;
         CachedPosition = transform.position;
+        CurrentHealthPoint = _defaultHealthPoint;
     }
 
     public void ResetData()

@@ -13,7 +13,7 @@ namespace GameSystem
         private Config _config;
         private EnemiesPool _enemyPool;
         private Player _player;
-        private GameEventBus _gameEventBus;
+        private GameEventBus _eventBus;
         private float _enemySpawnRepeatRate;
         private float _enemySpawnTimer;
         private float _spawnRadius;
@@ -28,7 +28,7 @@ namespace GameSystem
             _enemyPool = enemiesPool;
             _player = player;
             _spawnRadius = config.EnemySpawnRadius;
-            _gameEventBus = eventBus;            
+            _eventBus = eventBus;            
         }
 
         private void Awake()
@@ -55,27 +55,30 @@ namespace GameSystem
             Unsubscribe();
         }
 
-        private void OnChangeGameState(GameFlowState state)
+        private void Subscribe()
         {
-            if (state == GameFlowState.StartGame)
+            _eventBus.ChangeGameState += OnChangeGameState;
+            _gameFlowSystem.UpdateTick += OnUpdateTick;
+        }
+
+        private void Unsubscribe()
+        {
+            _eventBus.ChangeGameState -= OnChangeGameState;
+            _gameFlowSystem.UpdateTick -= OnUpdateTick;
+        }
+
+        private void OnChangeGameState(GameState state)
+        {
+            if (state == GameState.StartGame)
             {
-                OnStartGame();
-            }
-            else if (state == GameFlowState.Victory || state == GameFlowState.GameOver)
-            {
-                OnGameEnd();
+                ResetTimer();
             }
         }
 
-        private void OnStartGame()
+        private void ResetTimer()
         {
             _enemySpawnTimer = _enemySpawnRepeatRate;
-        }
-
-        private void OnGameEnd()
-        {
-            _enemyPool.ReturnAllActiveEnemies();
-        }
+        }       
 
         private void OnUpdateTick()
         {
@@ -97,7 +100,7 @@ namespace GameSystem
             enemy.transform.forward = dirToPlayer;
             enemy.ResetData();
             enemy.gameObject.SetActive(true);
-            _gameEventBus.EnemySpawn?.Invoke(enemy);
+            _eventBus.EnemySpawn?.Invoke(enemy);
         }
 
         private AbstractEnemy GetRandomEnemy()
@@ -112,18 +115,6 @@ namespace GameSystem
             float spawnAngle = Random.Range(0f, 360f);
             Vector3 spawnDir = Quaternion.Euler(0, spawnAngle, 0) * Vector3.forward;
             return _player.CachedPosition + spawnDir * _spawnRadius;
-        }
-
-        private void Subscribe()
-        {
-            _gameFlowSystem.ChangeGameState += OnChangeGameState;
-            _gameFlowSystem.UpdateTick += OnUpdateTick;
-        }
-
-        private void Unsubscribe()
-        {
-            _gameFlowSystem.ChangeGameState -= OnChangeGameState;
-            _gameFlowSystem.UpdateTick -= OnUpdateTick;
         }
     }
 }
