@@ -7,14 +7,14 @@ namespace GameSystem
     {
         private Vector3 _deffOffset;
         private Camera _camera;
-        private PlayerContainer _playerContainer;
+        private Player _player;
+        private GameFlowSystem _gameFlowSystem;
 
         [Inject]
-        public void Constructor(PlayerContainer playerContainer, GameFlowSystem gameFlow, Camera camera)
+        public void Constructor(Player player, GameFlowSystem gameFlow, Camera camera)
         {
-            _playerContainer = playerContainer;
+            _player = player;
             _camera = camera;
-            gameFlow.LateUpdateTick += OnLateUpdateTick;
         }
 
         private void Awake()
@@ -22,9 +22,27 @@ namespace GameSystem
             _deffOffset = _camera.transform.position;
         }
 
+        private void OnEnable()
+        {
+            Subscribe();
+        }
+
+        private void OnDisable()
+        {
+            Unsubscribe();
+        }
+        private void Subscribe()
+        {
+            _gameFlowSystem.LateUpdateTick += OnLateUpdateTick;
+        }
+        private void Unsubscribe()
+        {
+            _gameFlowSystem.LateUpdateTick -= OnLateUpdateTick;
+        }
+
         private void OnLateUpdateTick()
         {
-            _camera.transform.position = _playerContainer.transform.position + _deffOffset;
+            _camera.transform.position = _player.CachedPosition + _deffOffset;
         }
     }
 }

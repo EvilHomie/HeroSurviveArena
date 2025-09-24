@@ -1,44 +1,46 @@
-using Enemy;
-using TMPro;
 using UnityEngine;
 
-public abstract class AbstractMovementBehavior<TEnemy> : IMovementBehavior<TEnemy> where TEnemy : AbstractEnemy
+namespace Enemy
 {
-    public abstract void Move(TEnemy enemy, Vector3 targetPosition, float moveThreshold);
-
-    public void RotateTowards(TEnemy enemy, Vector3 toTarget)
+    public abstract class AbstractMovementBehavior<TEnemy> : IMovementBehavior<TEnemy> where TEnemy : AbstractEnemy
     {
-        if (toTarget.sqrMagnitude > 0.0001f)
+        public abstract void Move(TEnemy enemy, Player target, float moveThreshold);
+
+        public void RotateTowards(TEnemy enemy, Player target)
         {
-            enemy.CachedTransform.rotation = Quaternion.LookRotation(toTarget);
+            Vector3 toTarget = target.CachedPosition - enemy.CachedPosition;
+
+            if (toTarget.sqrMagnitude > 0.0001f) // просто проверка на совпадение позиций
+            {
+                enemy.CachedTransform.rotation = Quaternion.LookRotation(toTarget);
+            }
         }
+
+        public void MoveAndRotate(TEnemy enemy, Player target, float moveThreshold)
+        {
+            Move(enemy, target, moveThreshold);
+            RotateTowards(enemy, target);
+        }
+
+        void IMovementBehaviorBase.Move(AbstractEnemy enemy, Player target, float sqrMoveThreshold)
+            => Move((TEnemy)enemy, target, sqrMoveThreshold);
+        void IMovementBehaviorBase.RotateTowards(AbstractEnemy enemy, Player target)
+            => RotateTowards((TEnemy)enemy, target);
+        void IMovementBehaviorBase.MoveAndRotate(AbstractEnemy enemy, Player target, float sqrMoveThreshold)
+            => MoveAndRotate((TEnemy)enemy, target, sqrMoveThreshold);
     }
 
-    public void MoveAndRotate(TEnemy enemy, Vector3 targetPosition, float moveThreshold)
+    public interface IMovementBehaviorBase
     {
-        Move(enemy, targetPosition, moveThreshold);
-        Vector3 toTarget = targetPosition - enemy.CachedTransform.position;
-        RotateTowards(enemy, toTarget);
+        void Move(AbstractEnemy enemy, Player target, float sqrMoveThreshold);
+        void RotateTowards(AbstractEnemy enemy, Player target);
+        void MoveAndRotate(AbstractEnemy enemy, Player target, float sqrMoveThreshold);
     }
 
-    void IMovementBehaviorBase.Move(AbstractEnemy enemy, Vector3 targetPosition, float moveThreshold)
-        => Move((TEnemy)enemy, targetPosition, moveThreshold);
-    void IMovementBehaviorBase.RotateTowards(AbstractEnemy enemy, Vector3 targetPosition)
-        => RotateTowards((TEnemy)enemy, targetPosition);
-    void IMovementBehaviorBase.MoveAndRotate(AbstractEnemy enemy, Vector3 targetPosition, float moveThreshold)
-        => MoveAndRotate((TEnemy)enemy, targetPosition, moveThreshold);
-}
-
-public interface IMovementBehaviorBase
-{
-    void Move(AbstractEnemy enemy, Vector3 targetPosition, float moveThreshold);
-    void RotateTowards(AbstractEnemy enemy, Vector3 targetPosition);
-    void MoveAndRotate(AbstractEnemy enemy, Vector3 targetPosition, float moveThreshold);
-}
-
-public interface IMovementBehavior<TEnemy> : IMovementBehaviorBase where TEnemy : AbstractEnemy
-{
-    void Move(TEnemy enemy, Vector3 targetPosition, float moveThreshold);
-    void RotateTowards(TEnemy enemy, Vector3 targetPosition);
-    void MoveAndRotate(TEnemy enemy, Vector3 targetPosition, float moveThreshold);
+    public interface IMovementBehavior<TEnemy> : IMovementBehaviorBase where TEnemy : AbstractEnemy
+    {
+        void Move(TEnemy enemy, Player target, float sqrMoveThreshold);
+        void RotateTowards(TEnemy enemy, Player target);
+        void MoveAndRotate(TEnemy enemy, Player target, float sqrMoveThreshold);
+    }
 }

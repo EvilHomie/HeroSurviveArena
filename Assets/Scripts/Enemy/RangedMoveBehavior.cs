@@ -1,26 +1,46 @@
-using Enemy;
 using UnityEngine;
 
-public class RangedMoveBehavior : AbstractMovementBehavior<Ranged>
+namespace Enemy
 {
-    public override void Move(Ranged enemy, Vector3 targetPosition, float moveThreshold)
+    public class RangedMoveBehavior : AbstractMovementBehavior<Ranged>
     {
-        Vector3 toTarget = targetPosition - enemy.CachedTransform.position;
-        float desiredDistance = enemy.AtackDistance;
-        float sqrPlayerDistance = toTarget.sqrMagnitude;
-        float sqrDesiredDistance = desiredDistance * desiredDistance;
-
-        if (enemy.IsMaintainingDistance)
+        public override void Move(Ranged enemy, Player target, float sqrMoveThreshold)
         {
-            if (Mathf.Abs(sqrPlayerDistance - sqrDesiredDistance) > moveThreshold)
+            if (enemy.MaintainingDistance == 0)
             {
-                targetPosition -= toTarget.normalized * desiredDistance;
+                MoveToAttackRange(enemy, target);
+            }
+            else
+            {
+                MaintainDistance(enemy, target, sqrMoveThreshold);
             }
         }
-        else if (sqrPlayerDistance <= sqrDesiredDistance)
+
+        private void MaintainDistance(Ranged enemy, Player target, float sqrMoveThreshold)
         {
-            return;
+            Vector3 toTarget = target.CachedPosition - enemy.CachedTransform.position;
+            float sqrPlayerDistance = toTarget.sqrMagnitude;
+            float sqrMaintainingDistance = enemy.MaintainingDistance * enemy.MaintainingDistance;
+
+            if (Mathf.Abs(sqrPlayerDistance - sqrMaintainingDistance) > sqrMoveThreshold)
+            {
+                Vector3 toPosition = target.CachedPosition - toTarget.normalized * enemy.MaintainingDistance;
+                enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedTransform.position, toPosition, enemy.MoveSpeed * Time.deltaTime);
+                enemy.CachedPosition = enemy.CachedTransform.position;
+            }
         }
-        enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedTransform.position, targetPosition, enemy.MoveSpeed * Time.deltaTime);
+
+        private void MoveToAttackRange(Ranged enemy, Player target)
+        {
+            Vector3 toTarget = target.CachedPosition - enemy.CachedTransform.position;
+            float sqrPlayerDistance = toTarget.sqrMagnitude;
+            float sqrAtackDistance = enemy.AtackDistance * enemy.AtackDistance;
+
+            if (sqrPlayerDistance > sqrAtackDistance)
+            {
+                enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedTransform.position, target.CachedPosition, enemy.MoveSpeed * Time.deltaTime);
+                enemy.CachedPosition = enemy.CachedTransform.position;
+            }
+        }
     }
 }

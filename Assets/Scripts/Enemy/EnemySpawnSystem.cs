@@ -12,7 +12,7 @@ namespace GameSystem
         private GameFlowSystem _gameFlowSystem;
         private Config _config;
         private EnemiesPool _enemyPool;
-        private PlayerContainer _playerContainer;
+        private Player _player;
         private GameEventBus _gameEventBus;
         private float _enemySpawnRepeatRate;
         private float _enemySpawnTimer;
@@ -20,17 +20,15 @@ namespace GameSystem
         private List<string> _enemyNames;
 
         [Inject]
-        public void Constructor(GameFlowSystem gameFlowSystem, Config config, EnemiesPool enemiesPool, PlayerContainer playerContainer, GameEventBus eventBus)
+        public void Constructor(GameFlowSystem gameFlowSystem, Config config, EnemiesPool enemiesPool, Player player, GameEventBus eventBus)
         {
             _gameFlowSystem = gameFlowSystem;
             _config = config;
             _enemySpawnRepeatRate = config.EnemySpawnRepeatRate;
             _enemyPool = enemiesPool;
-            _playerContainer = playerContainer;
+            _player = player;
             _spawnRadius = config.EnemySpawnRadius;
-            _gameEventBus = eventBus;
-            _gameFlowSystem.ChangeGameState += OnChangeGameState;
-            _gameFlowSystem.UpdateTick += OnUpdateTick;
+            _gameEventBus = eventBus;            
         }
 
         private void Awake()
@@ -45,6 +43,16 @@ namespace GameSystem
                 _enemyNames.Add(enemy.EnemyName);
                 _enemyPool.AddEnemy(enemy, _config.EnemyPoolStartCapacity, _config.EnemyPoolMaxCapacity, _enemiesContainer.transform, _config.EnemyPoolPrewarmCount);
             }
+        }
+
+        private void OnEnable()
+        {
+            Subscribe();
+        }
+
+        private void OnDisable()
+        {
+            Unsubscribe();
         }
 
         private void OnChangeGameState(GameFlowState state)
@@ -84,7 +92,7 @@ namespace GameSystem
         {
             var enemy = GetRandomEnemy();
             var spawnPos = GetSpawnPos();
-            var dirToPlayer = _playerContainer.transform.position - spawnPos;
+            var dirToPlayer = _player.CachedPosition - spawnPos;
             enemy.transform.position = spawnPos;
             enemy.transform.forward = dirToPlayer;
             enemy.ResetData();
@@ -103,7 +111,19 @@ namespace GameSystem
         {
             float spawnAngle = Random.Range(0f, 360f);
             Vector3 spawnDir = Quaternion.Euler(0, spawnAngle, 0) * Vector3.forward;
-            return _playerContainer.transform.position + spawnDir * _spawnRadius;
+            return _player.CachedPosition + spawnDir * _spawnRadius;
+        }
+
+        private void Subscribe()
+        {
+            _gameFlowSystem.ChangeGameState += OnChangeGameState;
+            _gameFlowSystem.UpdateTick += OnUpdateTick;
+        }
+
+        private void Unsubscribe()
+        {
+            _gameFlowSystem.ChangeGameState -= OnChangeGameState;
+            _gameFlowSystem.UpdateTick -= OnUpdateTick;
         }
     }
 }

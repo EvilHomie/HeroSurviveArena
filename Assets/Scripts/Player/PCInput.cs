@@ -8,35 +8,42 @@ namespace GameInput
 {
     public class PCInput : IPlayerInput
     {
-        public event Action<Vector3> MoveAction;
-        public event Action<Vector3> RotateAction;
-        public event Action StartAtackAction;
-        public event Action EndAtackAction;
+        public Action<Vector3> MoveAction { get; set; }
+        public Action<Vector3> RotateAction { get; set; }
+        public Action StartAtackAction { get; set; }
+        public Action EndAtackAction { get; set; }
 
         private InputSystem_Actions _inputActions;
         private GameFlowSystem _gameFlowSystem;
-        private PlayerContainer _playerContainer;
+        private Player _player;
         private Camera _camera;
         private Plane _raycastPlane;
         private bool _isActive;
 
         [Inject]
-        public void Constructor(GameFlowSystem gameFlowSystem, PlayerContainer playerContainer, Camera camera)
+        public void Constructor(GameFlowSystem gameFlowSystem, Player playerContainer, Camera camera)
         {
             _inputActions = new InputSystem_Actions();
             _gameFlowSystem = gameFlowSystem;
-            _playerContainer = playerContainer;
+            _player = playerContainer;
             _camera = camera;
             _raycastPlane = new(Vector3.up, Vector3.zero);
-            Subscribes();
         }
 
-        private void Subscribes()
+        public void Subscrube()
         {
             _gameFlowSystem.UpdateTick += OnUpdateTick;
             _gameFlowSystem.ChangeGameState += OnGameChangeState;
             _inputActions.Player.Attack.performed += OnAttack;
             _inputActions.Player.Attack.canceled += OnEndAttack;
+        }
+
+        public void Unsubscribe()
+        {
+            _gameFlowSystem.UpdateTick -= OnUpdateTick;
+            _gameFlowSystem.ChangeGameState -= OnGameChangeState;
+            _inputActions.Player.Attack.performed -= OnAttack;
+            _inputActions.Player.Attack.canceled -= OnEndAttack;
         }
 
         private void OnUpdateTick()
@@ -71,7 +78,7 @@ namespace GameInput
             if (_raycastPlane.Raycast(ray, out float distance))
             {
                 Vector3 hitPoint = ray.GetPoint(distance);
-                Vector3 direction = hitPoint - _playerContainer.transform.position;
+                Vector3 direction = hitPoint - _player.CachedPosition;
                 direction.y = 0;
                 RotateAction?.Invoke(direction);
             }

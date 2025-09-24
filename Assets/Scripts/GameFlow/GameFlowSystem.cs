@@ -1,3 +1,4 @@
+using DI;
 using System;
 using UnityEngine;
 
@@ -6,11 +7,29 @@ namespace GameSystem
     public class GameFlowSystem : MonoBehaviour
     {
         [SerializeField] GameFlowState test;
-        public event Action UpdateTick;
-        public event Action LateUpdateTick;
-        public event Action<GameFlowState> ChangeGameState;
+        public Action PreUpdateTick { get; set; }
+        public Action UpdateTick { get; set; }
+        public Action LateUpdateTick { get; set; }
+        public Action<GameFlowState> ChangeGameState { get; set; }
 
+        private GameEventBus _eventBus;
         private GameFlowState _state;
+
+        [Inject]
+        public void Construct(GameEventBus eventBus)
+        {
+            _eventBus = eventBus;
+        }
+
+        private void OnEnable()
+        {
+            Subscribe();
+        }
+
+        private void OnDisable()
+        {
+            Unsubscribe();
+        }
 
         public void ChangeState(GameFlowState state)
         {
@@ -30,17 +49,38 @@ namespace GameSystem
 
             if (_state == GameFlowState.Playing)
             {
+                PreUpdateTick?.Invoke();
                 UpdateTick?.Invoke();
             }
 
 
 
-            
+
         }
 
         private void LateUpdate()
         {
             LateUpdateTick?.Invoke();
+        }
+
+        private void OnGameOver()
+        {
+            ChangeState(GameFlowState.GameOver);
+        }
+        private void OnVictory()
+        {
+            ChangeState(GameFlowState.Victory);
+        }
+
+        private void Subscribe()
+        {
+            _eventBus.GameOver += OnGameOver;
+            _eventBus.Victory += OnVictory;
+        }
+        private void Unsubscribe()
+        {
+            _eventBus.GameOver -= OnGameOver;
+            _eventBus.Victory -= OnVictory;
         }
     }
 }

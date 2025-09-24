@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
   <EnemyName>k__BackingField: Enemy_Kamikadze_Slow
-  <AtackDistance>k__BackingField: 0
+  <AtackDistance>k__BackingField: 1
   <MoveSpeed>k__BackingField: 1
   <ContactDamage>k__BackingField: 0
   _defaultHealthPoint: 0

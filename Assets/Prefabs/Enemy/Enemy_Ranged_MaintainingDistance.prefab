@@ -187,14 +187,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066b0dc32b178eb4d80a6a96facd5dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
+  _defaultHealthPoint: 0
   <EnemyName>k__BackingField: Enemy_Ranged_MaintainingDistance
   <AtackDistance>k__BackingField: 4
-  <MoveSpeed>k__BackingField: 2
+  <AttackDamage>k__BackingField: 0
   <ContactDamage>k__BackingField: 0
-  _defaultHealthPoint: 0
-  <IsMaintainingDistance>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 2
+  <MaintainingDistance>k__BackingField: 3
   <CanAttackWhileMoving>k__BackingField: 0
-  _atackRate: 0
+  <AttackRate>k__BackingField: 0.2
 --- !u!1 &8774174814326859513
 GameObject:
   m_ObjectHideFlags: 0

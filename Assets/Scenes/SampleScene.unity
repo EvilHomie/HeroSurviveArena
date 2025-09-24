@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 167141480}
   - component: {fileID: 167141482}
   m_Layer: 0
-  m_Name: PlayerContainer
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,9 +199,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 167141479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e92fa4651a67d64381c4bc2a663d479, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a46bc265294591458324611cd06e4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContainer
+  <MoveSpeed>k__BackingField: 5
+  _defaultHealthPoint: 0
 --- !u!1 &174578187
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +706,7 @@ GameObject:
   - component: {fileID: 771623634}
   - component: {fileID: 771623635}
   m_Layer: 0
-  m_Name: EnemyMoveSystem
+  m_Name: EnemyBehaviorSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1065,7 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectInstaller
   _gameFlowSystem: {fileID: 685607482}
-  _playerContainer: {fileID: 167141482}
+  _player: {fileID: 167141482}
   _config: {fileID: 11400000, guid: 8d2016204969c90459748975bb11fadb, type: 2}
   _camera: {fileID: 330585545}
   _eventBus: {fileID: 2066283471}

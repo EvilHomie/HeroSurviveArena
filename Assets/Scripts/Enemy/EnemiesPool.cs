@@ -2,6 +2,7 @@ using DI;
 using Enemy;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -9,17 +10,30 @@ namespace GameSystem
 {
     public class EnemiesPool : MonoBehaviour
     {
+        public readonly HashSet<AbstractEnemy> ActiveEnemies = new();
+
         private readonly Dictionary<string, ObjectPool<AbstractEnemy>> _poolByName = new();
         private readonly Dictionary<string, AbstractEnemy> _prefabByName = new();
         private Container _container;
+        private List<AbstractEnemy> _deadEnemies = new();
 
-        public readonly HashSet<AbstractEnemy> ActiveEnemies = new();
+        GameEventBus _gameEventBus;
+        GameFlowSystem _gameFlowSystem;
 
         [Inject]
-        public void Constructor(GameEventBus eventBus, Container container)
+        public void Construct(GameEventBus eventBus, Container container, GameFlowSystem gameFlowSystem)
         {
             _container = container;
-            eventBus.EnemyDie += ReturnEnemy;
+            
+        }
+
+        private void OnEnable()
+        {
+            Subscribe();
+        }
+        private void OnDisable()
+        {
+            Unsubscribe();
         }
 
         public void AddEnemy(AbstractEnemy enemyPF, int startCapacity, int maxCapacity, Transform parent = null, int prewarmCount = 1)
@@ -48,17 +62,18 @@ namespace GameSystem
 
         public void ReturnEnemy(AbstractEnemy enemy)
         {
-            FindPool(enemy.EnemyName).Release(enemy);
+            _deadEnemies.Add(enemy);
             enemy.gameObject.SetActive(false);
         }
 
         public void ReturnAllActiveEnemies()
         {
-            ActiveEnemies.RemoveWhere(enemy =>
+            foreach (var enemy in ActiveEnemies)
             {
                 ReturnEnemy(enemy);
-                return true;
-            });
+            }
+
+            ActiveEnemies.Clear();
         }
 
         private AbstractEnemy OnCreateEnemy(string enemyName, Transform parent)
@@ -104,6 +119,27 @@ namespace GameSystem
                 throw new Exception($"Не найден пул с {enemyName}");
             }
             return pool;
+        }
+
+        private void ClearCollection()
+        {
+            foreach (var enemy in _deadEnemies)
+            {
+                FindPool(enemy.EnemyName).Release(enemy);
+            }
+            _deadEnemies.Clear();
+        }
+
+        private void Subscribe()
+        {
+            _gameEventBus.EnemyDie += ReturnEnemy;
+            _gameFlowSystem.PreUpdateTick += ClearCollection;
+        }
+
+        private void Unsubscribe()
+        {
+            _gameEventBus.EnemyDie -= ReturnEnemy;
+            _gameFlowSystem.PreUpdateTick -= ClearCollection;
         }
     }
 }

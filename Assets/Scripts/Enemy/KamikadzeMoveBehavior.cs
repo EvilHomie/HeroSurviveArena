@@ -1,10 +1,13 @@
-using Enemy;
 using UnityEngine;
 
-public class KamikadzeMoveBehavior : AbstractMovementBehavior<Kamikadze>
+namespace Enemy
 {
-    public override void Move(Kamikadze enemy, Vector3 targetPosition, float moveThreshold)
+    public class KamikadzeMoveBehavior : AbstractMovementBehavior<Kamikadze>
     {
-        enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedTransform.position, targetPosition, enemy.MoveSpeed * Time.deltaTime);
+        public override void Move(Kamikadze enemy, Player target, float moveThreshold)
+        {
+            enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedPosition, target.CachedPosition, enemy.MoveSpeed * Time.deltaTime);
+            enemy.CachedPosition = enemy.CachedTransform.position;
+        }
     }
 }

@@ -1,50 +1,38 @@
 using DI;
-using GameSystem;
 using System;
 using UnityEngine;
 
 namespace Enemy
 {
-    public abstract class AbstractEnemy : MonoBehaviour, IDamageable
+    public abstract class AbstractEnemy : MonoBehaviour
     {
+        [SerializeField] float _defaultHealthPoint;
         [field: SerializeField] public string EnemyName { get; private set; }
         [field: SerializeField] public float AtackDistance { get; private set; }
-        [field: SerializeField] public float MoveSpeed { get; private set; }
+        [field: SerializeField] public float AttackDamage { get; private set; }
         [field: SerializeField] public float ContactDamage { get; private set; }
+        [field: SerializeField] public float MoveSpeed { get; private set; }
 
-        [SerializeField] float _defaultHealthPoint;
-        private GameEventBus _eventBus;
-
-        public bool InAtackRange { get; set; }
-        public float CurrentHealthPoint { get; private set; }
+        public bool IsDead { get; set; }
+        public Vector3 CachedPosition { get; set; }
+        public float CurrentHealthPoint { get; set; }
         public Transform CachedTransform { get; private set; }
-
         public Type EnemyType { get; private set; }
+        public bool InAttackRange {  get; set; }
 
 
         [Inject]
-        public void Construct(GameEventBus eventBus)
+        public void Construct()
         {
-            _eventBus = eventBus;
-            CachedTransform = transform;
+            CachedTransform = transform;            
             EnemyType = GetType();
         }
 
-        public virtual void ResetData()
+        public void ResetData()
         {
             CurrentHealthPoint = _defaultHealthPoint;
-            InAtackRange = false;
+            CachedPosition = transform.position;
+            IsDead = false;
         }
-
-        public void Damage(float value)
-        {
-            CurrentHealthPoint -= value;
-            if (CurrentHealthPoint <= 0)
-            {
-                _eventBus.EnemyDie?.Invoke(this);
-            }
-        }
-
-        public abstract void Atack();
     }
 }

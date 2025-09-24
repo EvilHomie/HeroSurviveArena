@@ -1,4 +1,5 @@
 using DI;
+using System;
 using UnityEngine;
 
 namespace GameSystem
@@ -6,30 +7,50 @@ namespace GameSystem
     public class PlayerControllSystem : MonoBehaviour
     {
         private IPlayerInput _input;
-        private float _moveSpeed;
-        private PlayerContainer _playerContainer;
+        private Player _player;
 
         [Inject]
-        public void Constructor(IPlayerInput playerInput, Config config, PlayerContainer playerContainer)
+        public void Constructor(IPlayerInput playerInput, Player player)
         {
             _input = playerInput;
-            _moveSpeed = config.PlayerSpeed;
-            _playerContainer = playerContainer;
+            _player = player;
+        }
+        private void OnEnable()
+        {
+            _input.Subscrube();
+            Subscribe();
+        }
 
+        private void OnDisable()
+        {
+            _input.Unsubscribe();
+            Unsubscribe();
+        }
+
+        private void Subscribe()
+        {
             _input.MoveAction += OnMove;
             _input.RotateAction += OnRotate;
             _input.StartAtackAction += OnAttack;
             _input.EndAtackAction += OnEndAttack;
         }
+        private void Unsubscribe()
+        {
+            _input.MoveAction -= OnMove;
+            _input.RotateAction -= OnRotate;
+            _input.StartAtackAction -= OnAttack;
+            _input.EndAtackAction -= OnEndAttack;
+        }
 
         private void OnRotate(Vector3 direction)
         {
-            _playerContainer.transform.rotation = Quaternion.LookRotation(direction);
+            _player.CachedTransform.rotation = Quaternion.LookRotation(direction);
         }
 
         private void OnMove(Vector3 direction)
         {
-            _playerContainer.transform.Translate(_moveSpeed * Time.deltaTime * direction, Space.World);
+            _player.CachedTransform.Translate(_player.MoveSpeed * Time.deltaTime * direction, Space.World);
+            _player.CachedPosition = _player.CachedTransform.position;
         }
         private void OnAttack()
         {
