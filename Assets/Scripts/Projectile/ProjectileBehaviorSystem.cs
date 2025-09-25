@@ -15,18 +15,24 @@ namespace GameSystem
         //private readonly Dictionary<Type, IAttackBehaviorBase> _attackStrategies = new();
 
         [Inject]
-        public void Construct(GameFlowSystem gameFlowSystem, ProjectilePool projectilePool)
+        public void Construct(GameFlowSystem gameFlowSystem, ProjectilePool projectilePool, GameEventBus eventBus)
         {
             _gameFlowSystem = gameFlowSystem;
             _projectilePool = projectilePool;
 
-            _movementStrategies[typeof(ProjectileStraight)] = new ProjectileStraightBehavior();
-            _movementStrategies[typeof(ProjectileHoming)] = new ProjectileHomingBehavior();
 
+            Register(new ProjectileStraightBehavior(eventBus));
+            Register(new ProjectileHomingBehavior(eventBus));
 
             //_attackStrategies[typeof(Kamikadze)] = new KamikadzeAttackBehavior(eventBus);
             //_attackStrategies[typeof(Ranged)] = new RangedAttackBehavior(eventBus);
         }
+
+        public void Register<TProjectile>(MovementBehaviorBase<TProjectile> behavior) where TProjectile : ProjectileBase
+        {
+            _movementStrategies[typeof(TProjectile)] = behavior;
+        }
+
         private void OnEnable()
         {
             Subscribe();

@@ -1,7 +1,13 @@
+using GameSystem;
+
 namespace Projectile
 {
-    public class ProjectileHomingBehavior : AbstractMovementBehavior<ProjectileHoming>
+    public class ProjectileHomingBehavior : MovementBehaviorBase<ProjectileHoming>
     {
+        public ProjectileHomingBehavior(GameEventBus eventBus) : base(eventBus)
+        {
+        }
+
         public override void Move(ProjectileHoming projectile)
         {
             var newDirection = projectile.TargetTransform.position - projectile.CachedPosition;

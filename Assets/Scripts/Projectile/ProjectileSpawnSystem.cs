@@ -45,8 +45,7 @@ namespace GameSystem
         {
             var instance = _projectilePool.Getitem(enemy.ShootProjectile.UsedName);
             instance.Config(_player.transform, enemy.ProjectileSpeed, enemy.CashedType, enemy.AttackDamage, enemy.CachedPosition);
-            instance.CachedGameObject.SetActive(true);
-            Debug.Log(instance.UsedName);
+            instance.CachedGameObject.SetActive(true);            
         }
 
         private void OnPlayerShoot(Player player)

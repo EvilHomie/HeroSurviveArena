@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class RangedMoveBehavior : AbstractMovementBehavior<EnemyShooter>
+    public class RangedMoveBehavior : MovementBehaviorBase<EnemyShooter>
     {
         public override void Move(EnemyShooter enemy, Player target, float sqrMoveThreshold)
         {

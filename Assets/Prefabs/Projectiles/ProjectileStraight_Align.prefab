@@ -238,3 +238,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStraight
   <UsedName>k__BackingField: ProjectileStraight_Align
   <AlignToDirection>k__BackingField: 1
+  <DefaultLifeTime>k__BackingField: 5

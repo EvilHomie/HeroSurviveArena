@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: Assembly-CSharp::Config
   <Enemies>k__BackingField:
+  - {fileID: 2205578786510736060, guid: aa999b3a7ebf4c043b6e4349d36e0d5d, type: 3}
+  - {fileID: 7370332899399526966, guid: 5a9073a8e7b05c240a99e23c72d6cf73, type: 3}
+  - {fileID: 1657846322282678106, guid: e8405c295cb2b0349bcda9d990156b2c, type: 3}
   - {fileID: 1657846322282678106, guid: e723cae130b81e94ab94a1b991479e6e, type: 3}
+  - {fileID: 1657846322282678106, guid: feeea5396397edc42aff261968766cd5, type: 3}
+  - {fileID: 1657846322282678106, guid: 53ee81e759450e74eb6ae59da2972f3d, type: 3}
   <EnemySpawnRepeatRate>k__BackingField: 2
   <EnemySpawnRadius>k__BackingField: 10
   <EnemyPoolStartCapacity>k__BackingField: 10

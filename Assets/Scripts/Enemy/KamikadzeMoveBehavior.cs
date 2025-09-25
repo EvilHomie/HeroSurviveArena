@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class KamikadzeMoveBehavior : AbstractMovementBehavior<Kamikadze>
+    public class KamikadzeMoveBehavior : MovementBehaviorBase<Kamikadze>
     {
         public override void Move(Kamikadze enemy, Player target, float moveThreshold)
         {

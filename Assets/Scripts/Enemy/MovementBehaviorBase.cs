@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public abstract class AbstractMovementBehavior<TEnemy> : IMovementBehavior<TEnemy> where TEnemy : EnemyBase
+    public abstract class MovementBehaviorBase<TEnemy> : IMovementBehavior<TEnemy> where TEnemy : EnemyBase
     {
         public abstract void Move(TEnemy enemy, Player target, float moveThreshold);
 

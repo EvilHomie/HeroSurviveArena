@@ -197,7 +197,7 @@ MonoBehaviour:
   <MaintainingDistance>k__BackingField: 0
   <CanAttackWhileMoving>k__BackingField: 0
   <AttackRate>k__BackingField: 1
-  <ProjectileSpeed>k__BackingField: 2
+  <ProjectileSpeed>k__BackingField: 5
   <ProjectileLifeTime>k__BackingField: 5
 --- !u!1 &8774174814326859513
 GameObject:
