@@ -25,11 +25,10 @@ namespace GameSystem
             _enemiesPool = enemiesPool;
             _sqrMoveTrashHold = _moveTrashHold * _moveTrashHold;
 
-
             _movementStrategies[typeof(Kamikadze)] = new KamikadzeMoveBehavior();
-            _movementStrategies[typeof(Ranged)] = new RangedMoveBehavior();
+            _movementStrategies[typeof(EnemyShooter)] = new RangedMoveBehavior();
             _attackStrategies[typeof(Kamikadze)] = new KamikadzeAttackBehavior(eventBus);
-            _attackStrategies[typeof(Ranged)] = new RangedAttackBehavior(eventBus);
+            _attackStrategies[typeof(EnemyShooter)] = new RangedAttackBehavior(eventBus);
         }
         private void OnEnable()
         {

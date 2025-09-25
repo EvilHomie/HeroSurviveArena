@@ -12,6 +12,7 @@ namespace DI
         [SerializeField] Config _config;
         [SerializeField] Camera _camera;
         [SerializeField] EnemiesPool _enemiesPool;
+        [SerializeField] ProjectilePool _projectilePool;
         protected override void InstallBindings()
         {
             _container.Bind<GameFlowSystem>().FromInstance(_gameFlowSystem);
@@ -20,6 +21,7 @@ namespace DI
             _container.Bind<Camera>().FromInstance(_camera);
             _container.Bind<GameEventBus>().FromInstance(_eventBus);
             _container.Bind<EnemiesPool>().FromInstance(_enemiesPool);
+            _container.Bind<ProjectilePool>().FromInstance(_projectilePool);
 
             if (Application.platform == RuntimePlatform.WindowsPlayer || Application.isEditor)
             {

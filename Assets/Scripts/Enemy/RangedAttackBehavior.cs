@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class RangedAttackBehavior : AbstractAttackBehavior<Ranged>
+    public class RangedAttackBehavior : AbstractAttackBehavior<EnemyShooter>
     {
         
         public RangedAttackBehavior(GameEventBus gameEventBus) : base(gameEventBus)
         {
         }
 
-        public override void Attack(Ranged enemy, Player target)
+        public override void Attack(EnemyShooter enemy, Player target)
         {
             Reload(enemy);
 
@@ -20,7 +20,7 @@ namespace Enemy
             }
         }
 
-        private void Reload(Ranged enemy)
+        private void Reload(EnemyShooter enemy)
         {
             if (!enemy.IsReloaded)
             {
@@ -29,7 +29,7 @@ namespace Enemy
             }
         }
 
-        private void ProcessShooting(Ranged enemy)
+        private void ProcessShooting(EnemyShooter enemy)
         {
             if (enemy.IsReloaded)
             {
@@ -39,9 +39,9 @@ namespace Enemy
             }
         }
 
-        private void Shoot(Ranged enemy)
+        private void Shoot(EnemyShooter enemy)
         {
-            Debug.Log($"{enemy.name} OneShoot");
+            _eventBus.EnemyShoot(enemy);
         }
     }
 }

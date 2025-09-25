@@ -1,9 +1,27 @@
 using Enemy;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameSystem
 {
-    public class EnemiesPool : AbstractPool<AbstractEnemy>
+    public class EnemiesPool : AbstractPool<EnemyBase>
     {
+        private GameObject _enemiesContainer;
+        private readonly List<string> _enemyNames = new();
+
+        private void Awake()
+        {
+            _enemiesContainer = new GameObject("Pool_Container_Enemies");
+
+            foreach (EnemyBase enemy in _config.Enemies)
+            {
+                if (enemy == null) continue;
+
+                _enemyNames.Add(enemy.UsedName);
+                CreateItemPool(enemy, _config.EnemyPoolStartCapacity, _config.EnemyPoolMaxCapacity, _enemiesContainer.transform, _config.EnemyPoolPrewarmCount);
+            }
+        }
+
         protected override void Subscribe()
         {
             _gameEventBus.EnemyDie += OnItemDeactivated;
@@ -18,6 +36,13 @@ namespace GameSystem
             _gameFlowSystem.UpdateTick -= ReleaseInactive;
         }
 
+        public EnemyBase GetRandomEnemy()
+        {
+            var randomIndex = Random.Range(0, _enemyNames.Count);
+            var randomName = _enemyNames[randomIndex];
+            return Getitem(randomName);
+        }
+
         private void OnChangeGameState(GameState gameState)
         {
             if (gameState == GameState.GameOver || gameState == GameState.Victory)
@@ -27,16 +52,3 @@ namespace GameSystem
         }
     }
 }
-
-
-
-/* просто заметка
-* var index = Random.Range(0, list.Count);
-var item = list[index];
-
-// Меняем местами с последним элементом
-list[index] = list[list.Count - 1];
-
-// Удаляем последний элемент
-list.RemoveAt(list.Count - 1);
-*/

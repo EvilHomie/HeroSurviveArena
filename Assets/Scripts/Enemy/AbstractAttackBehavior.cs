@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public abstract class AbstractAttackBehavior<TEnemy> : IAttackBehavior<TEnemy> where TEnemy : AbstractEnemy
+    public abstract class AbstractAttackBehavior<TEnemy> : IAttackBehavior<TEnemy> where TEnemy : EnemyBase
     {
         protected GameEventBus _eventBus;
 
@@ -22,19 +22,19 @@ namespace Enemy
             enemy.InAttackRange = toTarget.sqrMagnitude <= sqrAttackDistance;
         }
 
-        void IAttackBehaviorBase.Attack(AbstractEnemy enemy, Player target)
+        void IAttackBehaviorBase.Attack(EnemyBase enemy, Player target)
                 => Attack((TEnemy)enemy, target);
-        void IAttackBehaviorBase.CheckDistance(AbstractEnemy enemy, Player target)
+        void IAttackBehaviorBase.CheckDistance(EnemyBase enemy, Player target)
                 => CheckDistance((TEnemy)enemy, target);
     }
 
     public interface IAttackBehaviorBase
     {
-        void Attack(AbstractEnemy enemy, Player target);
-        void CheckDistance(AbstractEnemy enemy, Player target);
+        void Attack(EnemyBase enemy, Player target);
+        void CheckDistance(EnemyBase enemy, Player target);
     }
 
-    public interface IAttackBehavior<TEnemy> : IAttackBehaviorBase where TEnemy : AbstractEnemy
+    public interface IAttackBehavior<TEnemy> : IAttackBehaviorBase where TEnemy : EnemyBase
     {
         void Attack(TEnemy enemy, Player target);
         void CheckDistance(TEnemy enemy, Player target);

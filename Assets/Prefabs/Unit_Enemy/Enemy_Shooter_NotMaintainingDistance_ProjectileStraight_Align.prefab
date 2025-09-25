@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 7000425652355987251}
   - component: {fileID: 1657846322282678106}
   m_Layer: 0
-  m_Name: Enemy_Ranged_MaintainingDistance
+  m_Name: Enemy_Shooter_NotMaintainingDistance_ProjectileStraight_Align
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,18 +184,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8741808495252824265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 066b0dc32b178eb4d80a6a96facd5dc0, type: 3}
+  m_Script: {fileID: 11500000, guid: e3abae806e845d44aa946c64dfb585b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
+  <UsedName>k__BackingField: Enemy_Shooter_NotMaintainingDistance_ProjectileStraight_Align
   _defaultHealthPoint: 0
-  <AtackDistance>k__BackingField: 4
-  <AttackDamage>k__BackingField: 0
+  <AtackDistance>k__BackingField: 5
+  <AttackDamage>k__BackingField: 2
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
-  <UsedName>k__BackingField: Enemy_Ranged_MaintainingDistance
-  <MaintainingDistance>k__BackingField: 3
+  <ShootProjectile>k__BackingField: {fileID: 6788376192509085480, guid: 79623499f57206c42ac829f80fa72523, type: 3}
+  <MaintainingDistance>k__BackingField: 0
   <CanAttackWhileMoving>k__BackingField: 0
-  <AttackRate>k__BackingField: 0.2
+  <AttackRate>k__BackingField: 1
+  <ProjectileSpeed>k__BackingField: 2
+  <ProjectileLifeTime>k__BackingField: 5
 --- !u!1 &8774174814326859513
 GameObject:
   m_ObjectHideFlags: 0

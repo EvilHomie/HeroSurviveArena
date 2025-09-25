@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: Assembly-CSharp::Config
   <Enemies>k__BackingField:
-  - {fileID: 2205578786510736060, guid: aa999b3a7ebf4c043b6e4349d36e0d5d, type: 3}
   - {fileID: 1657846322282678106, guid: e723cae130b81e94ab94a1b991479e6e, type: 3}
-  - {fileID: 7370332899399526966, guid: 5a9073a8e7b05c240a99e23c72d6cf73, type: 3}
-  - {fileID: 1657846322282678106, guid: feeea5396397edc42aff261968766cd5, type: 3}
   <EnemySpawnRepeatRate>k__BackingField: 2
-  <EnemySpawnRadius>k__BackingField: 5
+  <EnemySpawnRadius>k__BackingField: 10
   <EnemyPoolStartCapacity>k__BackingField: 10
   <EnemyPoolMaxCapacity>k__BackingField: 15
   <EnemyPoolPrewarmCount>k__BackingField: 5
+  <Projectiles>k__BackingField:
+  - {fileID: 8722958410987131928, guid: abb368bcceb925448b66fbaacd2ff995, type: 3}
+  - {fileID: 1103792830914541579, guid: 0a9c067fa9292914db073c3dc618bf94, type: 3}
+  - {fileID: 5479966869826558936, guid: 5ade76f4f055dc84885dcded3590472e, type: 3}
+  - {fileID: 6788376192509085480, guid: 79623499f57206c42ac829f80fa72523, type: 3}
+  <ProjectilePoolStartCapacity>k__BackingField: 50
+  <ProjectilePoolMaxCapacity>k__BackingField: 500
+  <ProjectilePoolPrewarmCount>k__BackingField: 25

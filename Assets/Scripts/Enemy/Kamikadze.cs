@@ -1,6 +1,6 @@
 namespace Enemy
 {
-    public class Kamikadze : AbstractEnemy
+    public class Kamikadze : EnemyBase
     {
 
     }

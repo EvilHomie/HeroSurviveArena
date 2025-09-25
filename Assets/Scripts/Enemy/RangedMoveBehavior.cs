@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class RangedMoveBehavior : AbstractMovementBehavior<Ranged>
+    public class RangedMoveBehavior : AbstractMovementBehavior<EnemyShooter>
     {
-        public override void Move(Ranged enemy, Player target, float sqrMoveThreshold)
+        public override void Move(EnemyShooter enemy, Player target, float sqrMoveThreshold)
         {
             if (enemy.MaintainingDistance == 0)
             {
@@ -16,7 +16,7 @@ namespace Enemy
             }
         }
 
-        private void MaintainDistance(Ranged enemy, Player target, float sqrMoveThreshold)
+        private void MaintainDistance(EnemyShooter enemy, Player target, float sqrMoveThreshold)
         {
             Vector3 toTarget = target.CachedPosition - enemy.CachedTransform.position;
             float sqrPlayerDistance = toTarget.sqrMagnitude;
@@ -30,7 +30,7 @@ namespace Enemy
             }
         }
 
-        private void MoveToAttackRange(Ranged enemy, Player target)
+        private void MoveToAttackRange(EnemyShooter enemy, Player target)
         {
             Vector3 toTarget = target.CachedPosition - enemy.CachedTransform.position;
             float sqrPlayerDistance = toTarget.sqrMagnitude;

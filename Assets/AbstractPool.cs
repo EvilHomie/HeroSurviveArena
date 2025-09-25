@@ -16,11 +16,14 @@ namespace GameSystem
         private readonly Dictionary<string, T> _prefabByName = new();
         private readonly List<T> _inactiveItems = new();
 
+        protected private Config _config;
+
         [Inject]
-        public void Construct(GameEventBus eventBus, GameFlowSystem gameFlowSystem)
+        public void Construct(GameEventBus eventBus, GameFlowSystem gameFlowSystem, Config config)
         {
             _gameEventBus = eventBus;
             _gameFlowSystem = gameFlowSystem;
+            _config = config;
         }
 
         private void OnEnable()
@@ -35,7 +38,7 @@ namespace GameSystem
         protected abstract void Subscribe();
         protected abstract void Unsubscribe();
 
-        public void CreateItemPool(T prefab, int startCapacity, int maxCapacity, Transform parent = null, int prewarmCount = 1) 
+        protected void CreateItemPool(T prefab, int startCapacity, int maxCapacity, Transform parent = null, int prewarmCount = 1) 
         {
             prefab.gameObject.SetActive(false);
             _prefabByName.Add(prefab.UsedName, prefab);
@@ -96,7 +99,6 @@ namespace GameSystem
 
         private void OnGet(T item)
         {
-            item.ResetData();
             ItemsInUse.Add(item);
         }
         private void OnRelease(T item)

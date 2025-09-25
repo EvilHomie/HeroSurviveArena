@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public abstract class AbstractMovementBehavior<TEnemy> : IMovementBehavior<TEnemy> where TEnemy : AbstractEnemy
+    public abstract class AbstractMovementBehavior<TEnemy> : IMovementBehavior<TEnemy> where TEnemy : EnemyBase
     {
         public abstract void Move(TEnemy enemy, Player target, float moveThreshold);
 
@@ -22,22 +22,22 @@ namespace Enemy
             RotateTowards(enemy, target);
         }
 
-        void IMovementBehaviorBase.Move(AbstractEnemy enemy, Player target, float sqrMoveThreshold)
+        void IMovementBehaviorBase.Move(EnemyBase enemy, Player target, float sqrMoveThreshold)
             => Move((TEnemy)enemy, target, sqrMoveThreshold);
-        void IMovementBehaviorBase.RotateTowards(AbstractEnemy enemy, Player target)
+        void IMovementBehaviorBase.RotateTowards(EnemyBase enemy, Player target)
             => RotateTowards((TEnemy)enemy, target);
-        void IMovementBehaviorBase.MoveAndRotate(AbstractEnemy enemy, Player target, float sqrMoveThreshold)
+        void IMovementBehaviorBase.MoveAndRotate(EnemyBase enemy, Player target, float sqrMoveThreshold)
             => MoveAndRotate((TEnemy)enemy, target, sqrMoveThreshold);
     }
 
     public interface IMovementBehaviorBase
     {
-        void Move(AbstractEnemy enemy, Player target, float sqrMoveThreshold);
-        void RotateTowards(AbstractEnemy enemy, Player target);
-        void MoveAndRotate(AbstractEnemy enemy, Player target, float sqrMoveThreshold);
+        void Move(EnemyBase enemy, Player target, float sqrMoveThreshold);
+        void RotateTowards(EnemyBase enemy, Player target);
+        void MoveAndRotate(EnemyBase enemy, Player target, float sqrMoveThreshold);
     }
 
-    public interface IMovementBehavior<TEnemy> : IMovementBehaviorBase where TEnemy : AbstractEnemy
+    public interface IMovementBehavior<TEnemy> : IMovementBehaviorBase where TEnemy : EnemyBase
     {
         void Move(TEnemy enemy, Player target, float sqrMoveThreshold);
         void RotateTowards(TEnemy enemy, Player target);
