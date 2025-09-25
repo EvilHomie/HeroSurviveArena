@@ -188,11 +188,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
   _defaultHealthPoint: 0
-  <EnemyName>k__BackingField: Enemy_Ranged_NotMaintainingDistance
   <AtackDistance>k__BackingField: 4
   <AttackDamage>k__BackingField: 0
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 2
+  <UsedName>k__BackingField: Enemy_Ranged_NotMaintainingDistance
   <MaintainingDistance>k__BackingField: 0
   <CanAttackWhileMoving>k__BackingField: 0
   <AttackRate>k__BackingField: 0.2

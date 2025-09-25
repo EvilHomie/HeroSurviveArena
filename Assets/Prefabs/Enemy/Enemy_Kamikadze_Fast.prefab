@@ -74,11 +74,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
   _defaultHealthPoint: 0
-  <EnemyName>k__BackingField: Enemy_Kamikadze_Fast
   <AtackDistance>k__BackingField: 1
   <AttackDamage>k__BackingField: 3
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 3
+  <UsedName>k__BackingField: Enemy_Kamikadze_Fast
 --- !u!1 &5581591769207881982
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,8 +40,8 @@ namespace GameSystem
             {
                 if (enemy == null) continue;
 
-                _enemyNames.Add(enemy.EnemyName);
-                _enemyPool.AddEnemy(enemy, _config.EnemyPoolStartCapacity, _config.EnemyPoolMaxCapacity, _enemiesContainer.transform, _config.EnemyPoolPrewarmCount);
+                _enemyNames.Add(enemy.UsedName);
+                _enemyPool.CreateItemPool(enemy, _config.EnemyPoolStartCapacity, _config.EnemyPoolMaxCapacity, _enemiesContainer.transform, _config.EnemyPoolPrewarmCount);
             }
         }
 
@@ -107,7 +107,7 @@ namespace GameSystem
         {
             var randomIndex = Random.Range(0, _enemyNames.Count);
             var randomName = _enemyNames[randomIndex];
-            return _enemyPool.GetEnemy(randomName);
+            return _enemyPool.Getitem(randomName);
         }
 
         private Vector3 GetSpawnPos()

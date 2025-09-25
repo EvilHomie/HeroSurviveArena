@@ -13,7 +13,6 @@ namespace Enemy
             if (enemy.InAttackRange)
             {
                 target.CurrentHealthPoint -= enemy.AttackDamage;
-                enemy.IsDead = true;
                 _eventBus.EnemyDie?.Invoke(enemy);
             }
         }

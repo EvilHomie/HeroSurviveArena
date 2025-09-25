@@ -53,25 +53,25 @@ namespace GameSystem
 
         private void OnUpdateTick()
         {
-            foreach (var enemy in _enemiesPool.ActiveEnemies)
+            foreach (var enemy in _enemiesPool.ItemsInUse)
             {
-                if (_movementStrategies.TryGetValue(enemy.EnemyType, out var moveBehavior))
+                if (_movementStrategies.TryGetValue(enemy.CashedType, out var moveBehavior))
                 {
                     moveBehavior.MoveAndRotate(enemy, _player, _sqrMoveTrashHold);
                 }
                 else
                 {
-                    throw new Exception($"Нет стратегии движения для {enemy.EnemyType}");
+                    throw new Exception($"Нет стратегии движения для {enemy.CashedType}");
                 }
 
-                if (_attackStrategies.TryGetValue(enemy.EnemyType, out var attackBehavior))
+                if (_attackStrategies.TryGetValue(enemy.CashedType, out var attackBehavior))
                 {
                     attackBehavior.CheckDistance(enemy, _player);
                     attackBehavior.Attack(enemy, _player);
                 }
                 else
                 {
-                    throw new Exception($"Нет стратегии атаки для {enemy.EnemyType}");
+                    throw new Exception($"Нет стратегии атаки для {enemy.CashedType}");
                 }
             }
         }
