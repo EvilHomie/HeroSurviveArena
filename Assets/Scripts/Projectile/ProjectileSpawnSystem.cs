@@ -41,10 +41,10 @@ namespace GameSystem
             _eventBus.EnemyShoot -= OnEnemyShoot;
         }
 
-        private void OnEnemyShoot(EnemyShooter enemy)
+        private void OnEnemyShoot(Shooter enemy)
         {
             var instance = _projectilePool.Getitem(enemy.ShootProjectile.UsedName);
-            instance.Config(_player.transform, enemy.ProjectileSpeed, enemy.CashedType, enemy.AttackDamage, enemy.CachedPosition);
+            instance.Config(_player.transform, enemy.ProjectileSpeed, OwnerType.Enemy, enemy.AttackDamage, enemy.CachedPosition);
             instance.CachedGameObject.SetActive(true);            
         }
 

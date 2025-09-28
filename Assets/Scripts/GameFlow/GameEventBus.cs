@@ -13,7 +13,7 @@ namespace GameSystem
 
 
         public Action<Player> PlayerShoot;
-        public Action<EnemyShooter> EnemyShoot;
+        public Action<Shooter> EnemyShoot;
         public Action<ProjectileBase> ProjectileDie { get; set; }
     }
 }

@@ -2,9 +2,16 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class RangedMoveBehavior : MovementBehaviorBase<EnemyShooter>
+    public class ShooterMovement : EnemyMovementBase<Shooter>
     {
-        public override void Move(EnemyShooter enemy, Player target, float sqrMoveThreshold)
+        private readonly float _sqrMoveThreshold;
+
+        public ShooterMovement(float moveThreshold)
+        {
+            _sqrMoveThreshold = moveThreshold * moveThreshold;
+        }
+
+        public override void Move(Shooter enemy, Player target)
         {
             if (enemy.MaintainingDistance == 0)
             {
@@ -12,17 +19,17 @@ namespace Enemy
             }
             else
             {
-                MaintainDistance(enemy, target, sqrMoveThreshold);
+                MaintainDistance(enemy, target);
             }
         }
 
-        private void MaintainDistance(EnemyShooter enemy, Player target, float sqrMoveThreshold)
+        private void MaintainDistance(Shooter enemy, Player target)
         {
             Vector3 toTarget = target.CachedPosition - enemy.CachedTransform.position;
             float sqrPlayerDistance = toTarget.sqrMagnitude;
             float sqrMaintainingDistance = enemy.MaintainingDistance * enemy.MaintainingDistance;
 
-            if (Mathf.Abs(sqrPlayerDistance - sqrMaintainingDistance) > sqrMoveThreshold)
+            if (Mathf.Abs(sqrPlayerDistance - sqrMaintainingDistance) > _sqrMoveThreshold)
             {
                 Vector3 toPosition = target.CachedPosition - toTarget.normalized * enemy.MaintainingDistance;
                 enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedTransform.position, toPosition, enemy.MoveSpeed * Time.deltaTime);
@@ -30,7 +37,7 @@ namespace Enemy
             }
         }
 
-        private void MoveToAttackRange(EnemyShooter enemy, Player target)
+        private void MoveToAttackRange(Shooter enemy, Player target)
         {
             Vector3 toTarget = target.CachedPosition - enemy.CachedTransform.position;
             float sqrPlayerDistance = toTarget.sqrMagnitude;

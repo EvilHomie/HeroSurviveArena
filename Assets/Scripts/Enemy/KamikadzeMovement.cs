@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class KamikadzeMoveBehavior : MovementBehaviorBase<Kamikadze>
+    public class KamikadzeMovement : EnemyMovementBase<Kamikadze>
     {
-        public override void Move(Kamikadze enemy, Player target, float moveThreshold)
+        public override void Move(Kamikadze enemy, Player target)
         {
             enemy.CachedTransform.position = Vector3.MoveTowards(enemy.CachedPosition, target.CachedPosition, enemy.MoveSpeed * Time.deltaTime);
             enemy.CachedPosition = enemy.CachedTransform.position;

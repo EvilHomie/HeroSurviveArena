@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Projectile
@@ -11,27 +10,26 @@ namespace Projectile
         public float Damage { get; private set; }
         public GameObject CachedGameObject { get; private set; }
         public Transform CachedTransform { get; private set; }
-        public Type CashedType { get; private set; }
-        public Type CashedOwner { get; private set; }
+        public OwnerType OwnerType { get; private set; }
         public Vector3 Velocity { get; set; }
         public Vector3 CachedPosition { get; set; }
         public float LeftLifeTime { get; set; }
+        public abstract ProjectileType Type { get; }
 
         public void Init()
         {
             CachedTransform = transform;
             CachedGameObject = gameObject;
-            CashedType = GetType();
         }
 
-        public virtual void Config(Transform target, float speed, Type owner, float damage, Vector3 position)
+        public virtual void Config(Transform target, float speed, OwnerType owner, float damage, Vector3 position)
         {
             CachedPosition = position;
             CachedTransform.position = position;
-            CashedOwner = owner;
             var direction = target.position - position;
             Velocity = direction.normalized * speed;
             Damage = damage;
+            OwnerType = owner;
             LeftLifeTime = DefaultLifeTime;
 
             if (AlignToDirection)

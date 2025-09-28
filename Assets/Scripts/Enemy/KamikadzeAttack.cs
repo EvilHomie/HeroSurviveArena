@@ -2,14 +2,16 @@ using GameSystem;
 
 namespace Enemy
 {
-    public class KamikadzeAttackBehavior : AbstractAttackBehavior<Kamikadze>
+    public class KamikadzeAttack : EnemyAttackBase<Kamikadze>
     {
-        public KamikadzeAttackBehavior(GameEventBus gameEventBus) : base(gameEventBus)
+        public KamikadzeAttack(GameEventBus gameEventBus) : base(gameEventBus)
         {
         }
 
         public override void Attack(Kamikadze enemy, Player target)
         {
+            base.Attack(enemy, target);
+
             if (enemy.InAttackRange)
             {
                 target.CurrentHealthPoint -= enemy.AttackDamage;

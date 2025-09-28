@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyShooter : EnemyBase
+    public class Shooter : EnemyBase
     {
         [field: SerializeField] public ProjectileBase ShootProjectile { get; private set; }
         [field: SerializeField] public float MaintainingDistance { get; private set; }
@@ -13,5 +13,6 @@ namespace Enemy
         [field: SerializeField] public float ProjectileLifeTime { get; private set; }
         public float ReloadTimer { get; set; }
         public bool IsReloaded {  get; set; }
+        public override EnemyType Type => EnemyType.Shooter;
     }
 }

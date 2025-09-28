@@ -184,21 +184,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8741808495252824265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3abae806e845d44aa946c64dfb585b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dc8587f5e4ecf344819acae8fb2355e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
   <UsedName>k__BackingField: Enemy_Shooter_MaintainingDistance_ProjectileHoming_Align
-  _defaultHealthPoint: 0
-  <AtackDistance>k__BackingField: 5
+  _defaultHealthPoint: 10
+  <AtackDistance>k__BackingField: 6
   <AttackDamage>k__BackingField: 2
   <ContactDamage>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 2
+  <MoveSpeed>k__BackingField: 3
   <ShootProjectile>k__BackingField: {fileID: 1103792830914541579, guid: 0a9c067fa9292914db073c3dc618bf94, type: 3}
-  <MaintainingDistance>k__BackingField: 0
+  <MaintainingDistance>k__BackingField: 5
   <CanAttackWhileMoving>k__BackingField: 0
-  <AttackRate>k__BackingField: 1
-  <ProjectileSpeed>k__BackingField: 5
-  <ProjectileLifeTime>k__BackingField: 5
+  <AttackRate>k__BackingField: 2
+  <ProjectileSpeed>k__BackingField: 10
+  <ProjectileLifeTime>k__BackingField: 2
 --- !u!1 &8774174814326859513
 GameObject:
   m_ObjectHideFlags: 0

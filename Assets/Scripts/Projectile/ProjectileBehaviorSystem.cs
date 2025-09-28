@@ -1,7 +1,6 @@
 using DI;
 using Projectile;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameSystem
@@ -10,27 +9,20 @@ namespace GameSystem
     {
         private GameFlowSystem _gameFlowSystem;
         private ProjectilePool _projectilePool;
+        private GameEventBus _eventBus;
 
-        private readonly Dictionary<Type, IMovementBehaviorBase> _movementStrategies = new();
-        //private readonly Dictionary<Type, IAttackBehaviorBase> _attackStrategies = new();
+        private Action<ProjectileBase>[] _movementStrategies;
 
         [Inject]
         public void Construct(GameFlowSystem gameFlowSystem, ProjectilePool projectilePool, GameEventBus eventBus)
         {
             _gameFlowSystem = gameFlowSystem;
             _projectilePool = projectilePool;
+            _eventBus = eventBus;
 
 
-            Register(new ProjectileStraightBehavior(eventBus));
-            Register(new ProjectileHomingBehavior(eventBus));
-
-            //_attackStrategies[typeof(Kamikadze)] = new KamikadzeAttackBehavior(eventBus);
-            //_attackStrategies[typeof(Ranged)] = new RangedAttackBehavior(eventBus);
-        }
-
-        public void Register<TProjectile>(MovementBehaviorBase<TProjectile> behavior) where TProjectile : ProjectileBase
-        {
-            _movementStrategies[typeof(TProjectile)] = behavior;
+            RegisterMovement(ProjectileType.Homing, new ProjectileHomingMovement());
+            RegisterMovement(ProjectileType.Straight, new ProjectileStraightMovement());
         }
 
         private void OnEnable()
@@ -53,28 +45,40 @@ namespace GameSystem
             _gameFlowSystem.UpdateTick -= OnUpdateTick;
         }
 
+        private void RegisterMovement<TProjectile>(ProjectileType type, ProjectileMovementBase<TProjectile> behavior) where TProjectile : ProjectileBase
+        {
+            if (_movementStrategies == null)
+            {
+                int projectileTypeSize = Enum.GetValues(typeof(ProjectileType)).Length;
+                _movementStrategies = new Action<ProjectileBase>[projectileTypeSize];
+            }
+
+            _movementStrategies[(int)type] = p => behavior.Move((TProjectile)p);
+        }
+
+        private void MoveProjectile(ProjectileBase projectile)
+        {
+            var action = _movementStrategies[(int)projectile.Type] ?? throw new InvalidOperationException(
+                    $"Movement strategy not found for projectile type {projectile.Type}");
+            action.Invoke(projectile);
+        }
+
+        private void CheckLifeTime(ProjectileBase projectile)
+        {
+            projectile.LeftLifeTime -= Time.deltaTime;
+
+            if (projectile.LeftLifeTime <= 0)
+            {
+                _eventBus.ProjectileDie(projectile);
+            }
+        }
+
         private void OnUpdateTick()
         {
             foreach (var projectile in _projectilePool.ItemsInUse)
             {
-                if (_movementStrategies.TryGetValue(projectile.CashedType, out var moveBehavior))
-                {
-                    moveBehavior.Move(projectile);
-                }
-                else
-                {
-                    throw new Exception($"Нет стратегии движения для {projectile.CashedType}");
-                }
-
-                //if (_attackStrategies.TryGetValue(enemy.CashedType, out var attackBehavior))
-                //{
-                //    attackBehavior.CheckDistance(enemy, _player);
-                //    attackBehavior.Attack(enemy, _player);
-                //}
-                //else
-                //{
-                //    throw new Exception($"Нет стратегии атаки для {enemy.CashedType}");
-                //}
+                MoveProjectile(projectile);
+                CheckLifeTime(projectile);
             }
         }
     }
