@@ -76,7 +76,7 @@ MonoBehaviour:
   <UsedName>k__BackingField: Enemy_Kamikadze_Fast
   _defaultHealthPoint: 0
   <AtackDistance>k__BackingField: 1
-  <AttackDamage>k__BackingField: 3
+  <AttackDamage>k__BackingField: 1
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 3
 --- !u!1 &5581591769207881982

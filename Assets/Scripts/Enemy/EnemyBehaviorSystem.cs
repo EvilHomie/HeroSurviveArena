@@ -41,12 +41,12 @@ namespace GameSystem
 
         private void Subscribe()
         {
-            _gameFlowSystem.UpdateTick += OnUpdateTick;
+            _gameFlowSystem.SystemsUpdateTick += OnUpdateTick;
         }
 
         private void Unsubscribe()
         {
-            _gameFlowSystem.UpdateTick -= OnUpdateTick;
+            _gameFlowSystem.SystemsUpdateTick -= OnUpdateTick;
         }
 
         private void RegisterMovementStrategy<TEnemy>(EnemyType type, EnemyMovementBase<TEnemy> behavior) where TEnemy : EnemyBase
@@ -92,6 +92,8 @@ namespace GameSystem
                 MoveEnemy(enemy);
                 AttackPlayer(enemy);
             }
+
+            _enemiesPool.ReleaseInactive();
         }
     }
 }

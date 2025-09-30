@@ -1,4 +1,3 @@
-using Enemy;
 using Projectile;
 using System;
 using UnityEngine;
@@ -11,18 +10,17 @@ public class ProjectileSimpleImpact<T> : ProjectileImpactBase<T> where T : IDama
 
     public override void HandleImpact(ProjectileBase projectile)
     {
-        float moveDistance = projectile.Speed * Time.deltaTime;
-        Ray ray = new(projectile.CachedPosition, projectile.Velocity);
+        int hitCount = Physics.OverlapSphereNonAlloc(projectile.CachedPosition, projectile.Radius, Hits, ImpactLayer);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, moveDistance, ImpactLayer))
+        for (int i = 0; i < hitCount; i++)
         {
-            if (hit.collider.TryGetComponent(out T hitedObj))
+            if (Hits[i].TryGetComponent(out T target))
             {
-                hitedObj.CurrentHealthPoint -= projectile.Damage;
+                target.CurrentHealthPoint -= projectile.Damage;
 
-                if (hitedObj.CurrentHealthPoint < 0)
+                if (target.CurrentHealthPoint < 0)
                 {
-                    KillAction?.Invoke(hitedObj);
+                    KillAction?.Invoke(target);
                 }
 
                 DieAction?.Invoke(projectile);

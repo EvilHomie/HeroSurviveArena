@@ -26,14 +26,12 @@ namespace GameSystem
         {
             GameEventBus.ProjectileDie += OnItemDeactivated;
             GameEventBus.ChangeGameState += OnChangeGameState;
-            GameFlowSystem.UpdateTick += ReleaseInactive;
         }
 
         protected override void Unsubscribe()
         {
             GameEventBus.ProjectileDie -= OnItemDeactivated;
             GameEventBus.ChangeGameState -= OnChangeGameState;
-            GameFlowSystem.UpdateTick -= ReleaseInactive;
         }
 
         private void OnChangeGameState(GameState gameState)

@@ -62,6 +62,17 @@ namespace GameSystem
             return FindPool(itemName).Get();
         }
 
+        public void ReleaseInactive()
+        {
+            foreach (var item in _inactiveItems)
+            {
+                FindPool(item.UsedName).Release(item);
+                ItemsInUse.Remove(item);
+            }
+
+            _inactiveItems.Clear();
+        }
+
         protected void OnItemDeactivated(T item)
         {
             _inactiveItems.Add(item);
@@ -76,18 +87,7 @@ namespace GameSystem
             }
 
             ReleaseInactive();
-        }
-
-        protected void ReleaseInactive()
-        {
-            foreach (var item in _inactiveItems)
-            {
-                FindPool(item.UsedName).Release(item);
-                ItemsInUse.Remove(item);
-            }
-
-            _inactiveItems.Clear();
-        }
+        }        
 
         private T OnCreate(string itemName, Transform parent)
         {

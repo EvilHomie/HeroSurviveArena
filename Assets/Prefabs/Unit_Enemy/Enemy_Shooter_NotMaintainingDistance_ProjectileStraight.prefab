@@ -190,15 +190,15 @@ MonoBehaviour:
   <UsedName>k__BackingField: Enemy_Shooter_NotMaintainingDistance_ProjectileStraight
   _defaultHealthPoint: 10
   <AtackDistance>k__BackingField: 6
-  <AttackDamage>k__BackingField: 0
+  <AttackDamage>k__BackingField: 1
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 3
   <ShootProjectile>k__BackingField: {fileID: 5479966869826558936, guid: 5ade76f4f055dc84885dcded3590472e, type: 3}
   <MaintainingDistance>k__BackingField: 5
   <CanAttackWhileMoving>k__BackingField: 0
   <AttackRate>k__BackingField: 2
-  <ProjectileSpeed>k__BackingField: 40
-  <ProjectileLifeTime>k__BackingField: 2
+  <ProjectileSpeed>k__BackingField: 4
+  <ProjectileLifeTime>k__BackingField: 53.97
 --- !u!1 &8774174814326859513
 GameObject:
   m_ObjectHideFlags: 0

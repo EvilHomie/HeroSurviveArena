@@ -44,12 +44,12 @@ namespace GameSystem
 
         private void Subscribe()
         {
-            _gameFlowSystem.UpdateTick += OnUpdateTick;
+            _gameFlowSystem.SystemsUpdateTick += OnUpdateTick;
         }
 
         private void Unsubscribe()
         {
-            _gameFlowSystem.UpdateTick -= OnUpdateTick;
+            _gameFlowSystem.SystemsUpdateTick -= OnUpdateTick;
         }
 
         private void RegisterMovement<TProjectile>(ProjectileType type, ProjectileMovementBase<TProjectile> behavior) where TProjectile : ProjectileBase
@@ -111,11 +111,23 @@ namespace GameSystem
         }
 
         private void OnUpdateTick()
-        {
+        {  
             foreach (var projectile in _projectilePool.ItemsInUse)
             {
                 CheckLifeTime(projectile);
+            }
+
+            _projectilePool.ReleaseInactive();
+
+            foreach (var projectile in _projectilePool.ItemsInUse)
+            {
                 ProcessCollision(projectile);
+            }
+
+            _projectilePool.ReleaseInactive();
+
+            foreach (var projectile in _projectilePool.ItemsInUse)
+            {
                 MoveProjectile(projectile);
             }
         }

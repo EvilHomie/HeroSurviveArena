@@ -7,6 +7,7 @@ namespace Projectile
         [field: SerializeField] public string UsedName { get; private set; }
         [field: SerializeField] public bool AlignToDirection { get; private set; }
         [field: SerializeField] public float DefaultLifeTime { get; private set; }
+        [field: SerializeField] public float Radius { get; private set; }
         [field: SerializeField] public ProjectileImpactType ImpactType { get; private set; }
         public float Damage { get; private set; }
         public float Speed { get; private set; }

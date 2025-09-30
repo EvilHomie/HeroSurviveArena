@@ -7,7 +7,7 @@ namespace GameSystem
     public class GameFlowSystem : MonoBehaviour
     {
         [SerializeField] GameState test;
-        public Action UpdateTick { get; set; }
+        public Action SystemsUpdateTick { get; set; }
         public Action LateUpdateTick { get; set; }
 
         private GameEventBus _eventBus;
@@ -56,7 +56,7 @@ namespace GameSystem
 
             if (_currentState == GameState.Playing)
             {
-                UpdateTick?.Invoke();
+                SystemsUpdateTick?.Invoke();
             }
         }
 

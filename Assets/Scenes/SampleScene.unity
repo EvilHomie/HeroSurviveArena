@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContainer
   <MoveSpeed>k__BackingField: 5
-  _defaultHealthPoint: 11
+  _defaultHealthPoint: 903.75
 --- !u!136 &167141483
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -5,14 +5,14 @@ using UnityEngine;
 
 public abstract class ProjectileImpactBase<T> where T : IDamageable
 {
-    protected RaycastHit[] HitResults;
+    protected Collider[] Hits = new Collider[10];
     protected LayerMask ImpactLayer;
     protected Action<ProjectileBase> DieAction;
     protected Action<T> KillAction;
 
     public ProjectileImpactBase(int maxImpactCount, LayerMask impactLayer, Action<ProjectileBase> dieAction, Action<T> killAction)
     {
-        HitResults = new RaycastHit[maxImpactCount];
+        Hits = new Collider[maxImpactCount];
         ImpactLayer = impactLayer;
         DieAction = dieAction;
         KillAction = killAction;

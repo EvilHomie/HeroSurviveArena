@@ -239,3 +239,5 @@ MonoBehaviour:
   <UsedName>k__BackingField: ProjectileStraight
   <AlignToDirection>k__BackingField: 0
   <DefaultLifeTime>k__BackingField: 5
+  <Radius>k__BackingField: 0.2
+  <ImpactType>k__BackingField: 0

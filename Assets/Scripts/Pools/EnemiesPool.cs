@@ -26,14 +26,12 @@ namespace GameSystem
         {
             GameEventBus.EnemyDie += OnItemDeactivated;
             GameEventBus.ChangeGameState += OnChangeGameState;
-            GameFlowSystem.UpdateTick += ReleaseInactive;
         }
 
         protected override void Unsubscribe()
         {
             GameEventBus.EnemyDie -= OnItemDeactivated;
             GameEventBus.ChangeGameState -= OnChangeGameState;
-            GameFlowSystem.UpdateTick -= ReleaseInactive;
         }
 
         public EnemyBase GetRandomEnemy()
