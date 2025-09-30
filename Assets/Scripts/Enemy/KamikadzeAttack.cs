@@ -15,6 +15,12 @@ namespace Enemy
             if (enemy.InAttackRange)
             {
                 target.CurrentHealthPoint -= enemy.AttackDamage;
+
+                if (target.CurrentHealthPoint <= 0)
+                {
+                    EventBus.PlayerDie?.Invoke(target);
+                }
+
                 EventBus.EnemyDie?.Invoke(enemy);
             }
         }

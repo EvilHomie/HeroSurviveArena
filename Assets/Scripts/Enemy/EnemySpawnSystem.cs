@@ -37,13 +37,13 @@ namespace GameSystem
 
         private void Subscribe()
         {
-            _eventBus.ChangeGameState += OnChangeGameState;
+            _gameFlowSystem.ChangeGameState += OnChangeGameState;
             _gameFlowSystem.SystemsUpdateTick += OnUpdateTick;
         }
 
         private void Unsubscribe()
         {
-            _eventBus.ChangeGameState -= OnChangeGameState;
+            _gameFlowSystem.ChangeGameState -= OnChangeGameState;
             _gameFlowSystem.SystemsUpdateTick -= OnUpdateTick;
         }
 

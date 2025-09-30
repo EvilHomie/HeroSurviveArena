@@ -6,12 +6,14 @@ namespace GameSystem
 {
     public class GameManager : MonoBehaviour
     {
-        GameEventBus _eventBus;
+       private GameEventBus _eventBus;
+       private GameFlowSystem _gameFlowSystem;
 
         [Inject]
-        public void Construct(GameEventBus eventBus)
+        public void Construct(GameEventBus eventBus, GameFlowSystem gameFlowSystem)
         {
             _eventBus = eventBus;
+            _gameFlowSystem = gameFlowSystem;   
         }
 
         private void OnEnable()
@@ -26,13 +28,12 @@ namespace GameSystem
 
         private void Start()
         {
-            _eventBus.ChangeGameState?.Invoke(GameState.Init);
-            
+            _gameFlowSystem.ChangeStateRequest(GameState.Init);
         }
 
         private void OnPlayerDie(Player player)
         {
-            _eventBus.ChangeGameState?.Invoke(GameState.GameOver);
+            _gameFlowSystem.ChangeStateRequest(GameState.GameOver);
         }
     }
 }

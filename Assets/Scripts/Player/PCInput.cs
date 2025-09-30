@@ -36,7 +36,7 @@ namespace GameInput
         public void Subscrube()
         {
             _gameFlowSystem.SystemsUpdateTick += OnUpdateTick;
-            _eventBus.ChangeGameState += OnGameChangeState;
+            _gameFlowSystem.ChangeGameState += OnGameChangeState;
             _inputActions.Player.Attack.performed += OnAttack;
             _inputActions.Player.Attack.canceled += OnEndAttack;
         }
@@ -44,7 +44,7 @@ namespace GameInput
         public void Unsubscribe()
         {
             _gameFlowSystem.SystemsUpdateTick -= OnUpdateTick;
-            _eventBus.ChangeGameState -= OnGameChangeState;
+            _gameFlowSystem.ChangeGameState -= OnGameChangeState;
             _inputActions.Player.Attack.performed -= OnAttack;
             _inputActions.Player.Attack.canceled -= OnEndAttack;
         }

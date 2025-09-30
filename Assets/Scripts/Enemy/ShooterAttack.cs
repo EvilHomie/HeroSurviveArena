@@ -42,7 +42,7 @@ namespace Enemy
 
         private void Shoot(Shooter enemy)
         {
-            EventBus.EnemyShoot(enemy);
+            EventBus.EnemyShoot?.Invoke(enemy);
         }
     }
 }

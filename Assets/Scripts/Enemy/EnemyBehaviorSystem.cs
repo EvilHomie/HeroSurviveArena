@@ -87,13 +87,13 @@ namespace GameSystem
 
         private void OnUpdateTick()
         {
-            foreach (var enemy in _enemiesPool.ItemsInUse)
+            foreach (var enemy in _enemiesPool.ActiveItems)
             {
                 MoveEnemy(enemy);
                 AttackPlayer(enemy);
             }
 
-            _enemiesPool.ReleaseInactive();
+            _enemiesPool.ReleasePendingItems();
         }
     }
 }

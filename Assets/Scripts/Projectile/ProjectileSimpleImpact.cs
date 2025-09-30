@@ -12,19 +12,16 @@ public class ProjectileSimpleImpact<T> : ProjectileImpactBase<T> where T : IDama
     {
         int hitCount = Physics.OverlapSphereNonAlloc(projectile.CachedPosition, projectile.Radius, Hits, ImpactLayer);
 
-        for (int i = 0; i < hitCount; i++)
+        if (hitCount > 0 && Hits[0].TryGetComponent(out T target))
         {
-            if (Hits[i].TryGetComponent(out T target))
+            target.CurrentHealthPoint -= projectile.Damage;
+
+            if (target.CurrentHealthPoint <= 0)
             {
-                target.CurrentHealthPoint -= projectile.Damage;
-
-                if (target.CurrentHealthPoint < 0)
-                {
-                    KillAction?.Invoke(target);
-                }
-
-                DieAction?.Invoke(projectile);
+                KillAction?.Invoke(target);
             }
+
+            DieAction?.Invoke(projectile);
         }
     }
 }

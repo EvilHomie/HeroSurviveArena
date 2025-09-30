@@ -13,7 +13,6 @@ namespace GameSystem
         private GameFlowSystem _gameFlowSystem;
         private ProjectilePool _projectilePool;
         private GameEventBus _eventBus;
-
         private Action<ProjectileBase>[] _movementStrategies;
         private Action<ProjectileBase>[] _attackStrategies;
 
@@ -46,7 +45,7 @@ namespace GameSystem
         {
             _gameFlowSystem.SystemsUpdateTick += OnUpdateTick;
         }
-
+       
         private void Unsubscribe()
         {
             _gameFlowSystem.SystemsUpdateTick -= OnUpdateTick;
@@ -112,21 +111,21 @@ namespace GameSystem
 
         private void OnUpdateTick()
         {  
-            foreach (var projectile in _projectilePool.ItemsInUse)
+            foreach (var projectile in _projectilePool.ActiveItems)
             {
                 CheckLifeTime(projectile);
             }
 
-            _projectilePool.ReleaseInactive();
+            _projectilePool.ReleasePendingItems();
 
-            foreach (var projectile in _projectilePool.ItemsInUse)
+            foreach (var projectile in _projectilePool.ActiveItems)
             {
                 ProcessCollision(projectile);
             }
 
-            _projectilePool.ReleaseInactive();
+            _projectilePool.ReleasePendingItems();
 
-            foreach (var projectile in _projectilePool.ItemsInUse)
+            foreach (var projectile in _projectilePool.ActiveItems)
             {
                 MoveProjectile(projectile);
             }
