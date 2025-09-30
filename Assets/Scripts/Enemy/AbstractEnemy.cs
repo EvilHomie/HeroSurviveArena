@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public abstract class EnemyBase : MonoBehaviour, IPoolable
+    public abstract class EnemyBase : MonoBehaviour, IPoolable, IDamageable
     {
         [field: SerializeField] public string UsedName { get; private set; }
         [SerializeField] float _defaultHealthPoint;

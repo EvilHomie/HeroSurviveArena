@@ -50,7 +50,7 @@ namespace GameSystem
 
         private void OnPlayerShoot(Player player)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -170,7 +170,8 @@ GameObject:
   m_Component:
   - component: {fileID: 167141480}
   - component: {fileID: 167141482}
-  m_Layer: 0
+  - component: {fileID: 167141483}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,6 +208,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContainer
   <MoveSpeed>k__BackingField: 5
   _defaultHealthPoint: 11
+--- !u!136 &167141483
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167141479}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &174578187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2f729a8db9b3849a37db0d3099e9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileBehaviorSystem
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1986907809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,9 +1245,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 167141480}
     m_Modifications:
+    - target: {fileID: 3864526527881595246, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4521854101253756843, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521854101253756843, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611794331463122260, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6212748677480560418, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1259,7 +1301,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6628142584326290120, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861593014007313063, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3313735083617268259, guid: 353937a0d23394b4ab6c28c0fcaabf2e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

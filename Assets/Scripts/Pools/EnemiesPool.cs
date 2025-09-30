@@ -13,27 +13,27 @@ namespace GameSystem
         {
             _enemiesContainer = new GameObject("Pool_Container_Enemies");
 
-            foreach (EnemyBase enemy in _config.Enemies)
+            foreach (EnemyBase enemy in Config.Enemies)
             {
                 if (enemy == null) continue;
 
                 _enemyNames.Add(enemy.UsedName);
-                CreateItemPool(enemy, _config.EnemyPoolStartCapacity, _config.EnemyPoolMaxCapacity, _enemiesContainer.transform, _config.EnemyPoolPrewarmCount);
+                CreateItemPool(enemy, Config.EnemyPoolStartCapacity, Config.EnemyPoolMaxCapacity, _enemiesContainer.transform, Config.EnemyPoolPrewarmCount);
             }
         }
 
         protected override void Subscribe()
         {
-            _gameEventBus.EnemyDie += OnItemDeactivated;
-            _gameEventBus.ChangeGameState += OnChangeGameState;
-            _gameFlowSystem.UpdateTick += ReleaseInactive;
+            GameEventBus.EnemyDie += OnItemDeactivated;
+            GameEventBus.ChangeGameState += OnChangeGameState;
+            GameFlowSystem.UpdateTick += ReleaseInactive;
         }
 
         protected override void Unsubscribe()
         {
-            _gameEventBus.EnemyDie -= OnItemDeactivated;
-            _gameEventBus.ChangeGameState -= OnChangeGameState;
-            _gameFlowSystem.UpdateTick -= ReleaseInactive;
+            GameEventBus.EnemyDie -= OnItemDeactivated;
+            GameEventBus.ChangeGameState -= OnChangeGameState;
+            GameFlowSystem.UpdateTick -= ReleaseInactive;
         }
 
         public EnemyBase GetRandomEnemy()

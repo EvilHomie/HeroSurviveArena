@@ -15,17 +15,17 @@ namespace DI
         [SerializeField] ProjectilePool _projectilePool;
         protected override void InstallBindings()
         {
-            _container.Bind<GameFlowSystem>().FromInstance(_gameFlowSystem);
-            _container.Bind<Player>().FromInstance(_player);
-            _container.Bind<Config>().FromInstance(_config);
-            _container.Bind<Camera>().FromInstance(_camera);
-            _container.Bind<GameEventBus>().FromInstance(_eventBus);
-            _container.Bind<EnemiesPool>().FromInstance(_enemiesPool);
-            _container.Bind<ProjectilePool>().FromInstance(_projectilePool);
+            Container.Bind<GameFlowSystem>().FromInstance(_gameFlowSystem);
+            Container.Bind<Player>().FromInstance(_player);
+            Container.Bind<Config>().FromInstance(_config);
+            Container.Bind<Camera>().FromInstance(_camera);
+            Container.Bind<GameEventBus>().FromInstance(_eventBus);
+            Container.Bind<EnemiesPool>().FromInstance(_enemiesPool);
+            Container.Bind<ProjectilePool>().FromInstance(_projectilePool);
 
             if (Application.platform == RuntimePlatform.WindowsPlayer || Application.isEditor)
             {
-                _container.Bind<IPlayerInput>().To<PCInput>().AsSingleton();
+                Container.Bind<IPlayerInput>().To<PCInput>().AsSingleton();
             }
         }
     }

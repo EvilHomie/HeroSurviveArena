@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3680397959226959365}
   - component: {fileID: 6303312928377339868}
   - component: {fileID: 7820001308607205849}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4260948807447853725}
   - component: {fileID: 7000425652355987251}
   - component: {fileID: 1657846322282678106}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy_Shooter_MaintainingDistance_ProjectileHoming_Align
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,14 +190,14 @@ MonoBehaviour:
   <UsedName>k__BackingField: Enemy_Shooter_MaintainingDistance_ProjectileHoming_Align
   _defaultHealthPoint: 10
   <AtackDistance>k__BackingField: 6
-  <AttackDamage>k__BackingField: 2
+  <AttackDamage>k__BackingField: 0
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 3
   <ShootProjectile>k__BackingField: {fileID: 1103792830914541579, guid: 0a9c067fa9292914db073c3dc618bf94, type: 3}
   <MaintainingDistance>k__BackingField: 5
   <CanAttackWhileMoving>k__BackingField: 0
   <AttackRate>k__BackingField: 2
-  <ProjectileSpeed>k__BackingField: 10
+  <ProjectileSpeed>k__BackingField: 40
   <ProjectileLifeTime>k__BackingField: 2
 --- !u!1 &8774174814326859513
 GameObject:
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 1152722139223685606}
   - component: {fileID: 8770492450765630411}
   - component: {fileID: 936445672059096272}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DirectionMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}

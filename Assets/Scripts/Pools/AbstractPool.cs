@@ -9,21 +9,21 @@ namespace GameSystem
     public abstract class AbstractPool<T> : MonoBehaviour where T : MonoBehaviour, IPoolable
     {
         public readonly HashSet<T> ItemsInUse = new();
-        protected GameEventBus _gameEventBus;
-        protected GameFlowSystem _gameFlowSystem;
+        protected GameEventBus GameEventBus;
+        protected GameFlowSystem GameFlowSystem;
+        protected private Config Config;
 
         private readonly Dictionary<string, ObjectPool<T>> _poolByName = new();
         private readonly Dictionary<string, T> _prefabByName = new();
         private readonly List<T> _inactiveItems = new();
 
-        protected private Config _config;
 
         [Inject]
         public void Construct(GameEventBus eventBus, GameFlowSystem gameFlowSystem, Config config)
         {
-            _gameEventBus = eventBus;
-            _gameFlowSystem = gameFlowSystem;
-            _config = config;
+            GameEventBus = eventBus;
+            GameFlowSystem = gameFlowSystem;
+            Config = config;
         }
 
         private void OnEnable()

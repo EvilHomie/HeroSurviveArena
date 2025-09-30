@@ -1,7 +1,7 @@
 using DI;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public Vector3 CachedPosition { get; set; }
     [field: SerializeField] public float MoveSpeed { get; private set; }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7799033138393467399}
   - component: {fileID: 4307252864379203371}
   - component: {fileID: 8812387967296190486}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 9161816595040362206}
   - component: {fileID: 8174864072489353310}
   - component: {fileID: 7370332899399526966}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy_Kamikadze_Slow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,12 +185,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad2b24051e62b14099467521359f164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySphere
+  <UsedName>k__BackingField: Enemy_Kamikadze_Slow
   _defaultHealthPoint: 0
   <AtackDistance>k__BackingField: 1
   <AttackDamage>k__BackingField: 3
   <ContactDamage>k__BackingField: 0
   <MoveSpeed>k__BackingField: 1
-  <UsedName>k__BackingField: Enemy_Kamikadze_Slow
 --- !u!1 &3607933808188110834
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 2746993154407349056}
   - component: {fileID: 9036476461053949966}
   - component: {fileID: 1635374529737918165}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DirectionMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}

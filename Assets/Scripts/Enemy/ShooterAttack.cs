@@ -12,8 +12,8 @@ namespace Enemy
 
         public override void Attack(Shooter enemy, Player target)
         {
-            base.Attack(enemy, target);
-            Reload(enemy);
+            CheckDistance(enemy, target);
+            ProcessReloading(enemy);
 
             if (enemy.InAttackRange)
             {
@@ -21,7 +21,7 @@ namespace Enemy
             }
         }
 
-        private void Reload(Shooter enemy)
+        private void ProcessReloading(Shooter enemy)
         {
             if (!enemy.IsReloaded)
             {
@@ -42,7 +42,7 @@ namespace Enemy
 
         private void Shoot(Shooter enemy)
         {
-            _eventBus.EnemyShoot(enemy);
+            EventBus.EnemyShoot(enemy);
         }
     }
 }

@@ -10,10 +10,9 @@ namespace GameSystem
         public Action<GameState> ChangeGameState { get; set; }
         public Action<EnemyBase> EnemySpawn { get; set; }
         public Action<EnemyBase> EnemyDie { get; set; }
-
-
-        public Action<Player> PlayerShoot;
-        public Action<Shooter> EnemyShoot;
+        public Action<Player> PlayerDie { get; set; }
+        public Action<Player> PlayerShoot { get; set; }
+        public Action<Shooter> EnemyShoot { get; set; }
         public Action<ProjectileBase> ProjectileDie { get; set; }
     }
 }

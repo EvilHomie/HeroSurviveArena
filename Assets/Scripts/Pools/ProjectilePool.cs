@@ -13,27 +13,27 @@ namespace GameSystem
         {
             _projectileContainer = new GameObject("Pool_Container_Projectile");
 
-            foreach (ProjectileBase projectile in _config.Projectiles)
+            foreach (ProjectileBase projectile in Config.Projectiles)
             {
                 if (projectile == null) continue;
 
                 _projectileNames.Add(projectile.UsedName);
-                CreateItemPool(projectile, _config.ProjectilePoolStartCapacity, _config.ProjectilePoolMaxCapacity, _projectileContainer.transform, _config.ProjectilePoolPrewarmCount);
+                CreateItemPool(projectile, Config.ProjectilePoolStartCapacity, Config.ProjectilePoolMaxCapacity, _projectileContainer.transform, Config.ProjectilePoolPrewarmCount);
             }
         }
 
         protected override void Subscribe()
         {
-            _gameEventBus.ProjectileDie += OnItemDeactivated;
-            _gameEventBus.ChangeGameState += OnChangeGameState;
-            _gameFlowSystem.UpdateTick += ReleaseInactive;
+            GameEventBus.ProjectileDie += OnItemDeactivated;
+            GameEventBus.ChangeGameState += OnChangeGameState;
+            GameFlowSystem.UpdateTick += ReleaseInactive;
         }
 
         protected override void Unsubscribe()
         {
-            _gameEventBus.ProjectileDie -= OnItemDeactivated;
-            _gameEventBus.ChangeGameState -= OnChangeGameState;
-            _gameFlowSystem.UpdateTick -= ReleaseInactive;
+            GameEventBus.ProjectileDie -= OnItemDeactivated;
+            GameEventBus.ChangeGameState -= OnChangeGameState;
+            GameFlowSystem.UpdateTick -= ReleaseInactive;
         }
 
         private void OnChangeGameState(GameState gameState)

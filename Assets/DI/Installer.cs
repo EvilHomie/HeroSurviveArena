@@ -4,11 +4,11 @@ namespace DI
 {
     public abstract class Installer : MonoBehaviour
     {
-        protected Container _container;
+        protected Container Container;
 
         public void Init()
         {
-            _container = new();
+            Container = new();
             InstallBindings();
             InjectSceneMonobehaviours();
         }
@@ -18,7 +18,7 @@ namespace DI
             var sceneMonoBehaviours = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var monoBehaviour in sceneMonoBehaviours)
             {
-                _container.InjectMonoBehaviour(monoBehaviour);
+                Container.InjectMonoBehaviour(monoBehaviour);
             }
         }
 

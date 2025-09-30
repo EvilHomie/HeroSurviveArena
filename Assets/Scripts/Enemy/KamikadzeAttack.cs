@@ -10,12 +10,12 @@ namespace Enemy
 
         public override void Attack(Kamikadze enemy, Player target)
         {
-            base.Attack(enemy, target);
+            CheckDistance(enemy, target);
 
             if (enemy.InAttackRange)
             {
                 target.CurrentHealthPoint -= enemy.AttackDamage;
-                _eventBus.EnemyDie?.Invoke(enemy);
+                EventBus.EnemyDie?.Invoke(enemy);
             }
         }
     }
